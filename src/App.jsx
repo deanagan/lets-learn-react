@@ -1,10 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
 import Reveal from "reveal.js";
 import RevealHighlight from 'reveal.js/plugin/highlight/highlight';
 import "reveal.js/dist/reveal.css";
 import "reveal.js/dist/theme/beige.css";
 import "reveal.js/plugin/highlight/monokai.css";
+import Remember from "./Contents/Remember";
 
 
 const code = `
@@ -50,6 +51,7 @@ function App() {
           <section>
             <h2 className="title">Let's Learn React!</h2>
           </section>
+          <Remember />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>
