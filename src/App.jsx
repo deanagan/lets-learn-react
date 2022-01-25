@@ -6,6 +6,7 @@ import "reveal.js/dist/reveal.css";
 import "reveal.js/dist/theme/beige.css";
 import "reveal.js/plugin/highlight/monokai.css";
 import Remember from "./Contents/Remember";
+import TableOfContents from "./Contents/TableOfContents";
 
 
 const code = `
@@ -52,6 +53,7 @@ function App() {
             <h2 className="title">Let's Learn React!</h2>
           </section>
           <Remember />
+          <TableOfContents />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>
