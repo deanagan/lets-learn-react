@@ -7,6 +7,7 @@ import "reveal.js/dist/theme/beige.css";
 import "reveal.js/plugin/highlight/monokai.css";
 import Remember from "./Contents/Remember";
 import TableOfContents from "./Contents/TableOfContents";
+import CodeStructure from "./Contents/CodeStructure";
 
 
 const code = `
@@ -54,6 +55,7 @@ function App() {
           </section>
           <Remember />
           <TableOfContents />
+          <CodeStructure />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>
