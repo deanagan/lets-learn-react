@@ -36,13 +36,15 @@ function App() {
       // Learn about plugins: https:/revealjs.com/plugins/
       plugins: [RevealHighlight],
       dependencies: [],
-      width: 960,
-      height: 700,
+      width: "100%",
+      height: "100%",
       pdfSeparateFragments: false,
       pdfMaxPagesPerSlide: 1,
       embedded: false,
       center: true,
+      margin: 0,
     })
+
     revealRef.current = deck
   }, []);
 
