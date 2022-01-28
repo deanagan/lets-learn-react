@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
-import { Problematic } from "../Demo/MoveStateDown";
-
+import { Better, Problematic } from "../Demo/MoveStateDown";
 
 const structures = [
   {
@@ -11,6 +10,8 @@ const structures = [
       {
         uniqueId: 1,
         lineNumbers: "",
+        isProblematic: true,
+        note: "ExpensiveComponent re-renders each time the color is changed when it shouldn't need to.",
         src: dedentStrUsing1stLineIndent(`
               function ExpensiveComponent() {
                 const renderCount = useRef(0);
@@ -37,6 +38,8 @@ const structures = [
       {
         uniqueId: 2,
         lineNumbers: "13,16,17",
+        isProblematic: true,
+        note: "These items can be moved down",
         src: dedentStrUsing1stLineIndent(`
               function ExpensiveComponent() {
                 const renderCount = useRef(0);
@@ -63,6 +66,8 @@ const structures = [
       {
         uniqueId: 3,
         lineNumbers: "",
+        isProblematic: false,
+        note: "Shifting to the function component MovedStateDown, fixes the problem.",
         src: dedentStrUsing1stLineIndent(`
               function MovedStateDown() {
                 const [color, setColor] = useState("red");
@@ -177,7 +182,6 @@ const StyledParagraph = styled.p`
   font-size: 0.5em;
 `;
 const StyledPre = styled.pre`
-
   code {
     font-size: 0.65em;
     line-height: 1.3;
@@ -198,35 +202,39 @@ const DemoFlexItem = styled.div`
 `;
 
 export default function CodeStructure() {
-  const codeData = (codes) =>
-    codes.map((code) => (
-      <code
+  const codeData = (codes) => {
+    const data = codes.map((code) => {
+      return (<code
+        key={code.uniqueId}
         className={code.uniqueId === 1 ? "javascript" : "fragment javascript"}
         data-trim
         data-line-numbers={code.lineNumbers}
       >
         {code.src}
-      </code>
-    ));
+      </code>)
+    });
+
+    return data
+  }
 
   return (
     <section>
       <h4>Code structure - our plan A to improve performance</h4>
-      <FlexContainer>
-        <CodeFlexItem>
-          {structures.map((s) => (
-            <section key={s.uniqueId}>
-              <StyledParagraph>{s.text}</StyledParagraph>
-              <StyledPre className="prettyprint">{codeData(s.codes)}</StyledPre>
-              {/* <a href={s.codeSandBoxLink}>See code</a> */}
-            </section>
-          ))}
-        </CodeFlexItem>
-        <div>
-          <Problematic />
 
-        </div>
-      </FlexContainer>
+      {structures.map(({uniqueId, text, codes}) => {
+        const data = codeData(codes);
+        return (<section key={uniqueId}>
+          <FlexContainer>
+            <CodeFlexItem>
+              <StyledParagraph>{text}</StyledParagraph>
+              <StyledPre className="prettyprint">{data}</StyledPre>
+            </CodeFlexItem>
+            <div>
+              <Problematic />
+            </div>
+          </FlexContainer>
+        </section>)
+      })}
     </section>
   );
 }
