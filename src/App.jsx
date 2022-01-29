@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import Reveal from "reveal.js";
 import RevealHighlight from 'reveal.js/plugin/highlight/highlight';
@@ -24,6 +24,9 @@ function ExpensiveComponent() {
 `
 
 function App() {
+  const [fragmentNo, setFragmentNo] = useState(0)
+  const [slideNo, setSlideNo] = useState({h: 0, v: 0})
+  const [isRevealReady, setIsRevealReady] = useState(false)
   const revealRef = useRef();
   useEffect(() => {
 
@@ -31,6 +34,7 @@ function App() {
       embedded: true,
       keyboardCondition: "focused",
     })
+
     deck.initialize({
       hash: true,
       // Learn about plugins: https:/revealjs.com/plugins/
@@ -46,7 +50,30 @@ function App() {
     })
 
     revealRef.current = deck
+    setIsRevealReady(r => !r)
   }, []);
+
+  const slideChangedEventHandler = useCallback((event) => {
+    setSlideNo({h: +event.indexh, v: +event.indexv})
+    console.log(event.index, event.indexv)
+  }, []);
+
+  const fragmentShownEventHandler = useCallback(event => {
+    const {f} = revealRef.current.getIndices()
+    console.log('Fragment: ', f)
+    setFragmentNo(f)
+  },[]);
+
+  useEffect(() => {
+    if (isRevealReady) {
+      revealRef.current.on('slidechanged', slideChangedEventHandler);
+      revealRef.current.on( 'fragmentshown', fragmentShownEventHandler);
+      revealRef.current.on( 'fragmenthidden', fragmentShownEventHandler);
+      const { f, h, v} = revealRef.current.getIndices()
+      setFragmentNo(f)
+      setSlideNo({h, v})
+    }
+  }, [isRevealReady, slideChangedEventHandler, fragmentShownEventHandler])
 
   return (
     <div className="App">
@@ -57,7 +84,7 @@ function App() {
           </section>
           <Remember />
           <TableOfContents />
-          <CodeStructure />
+          <CodeStructure fragmentNumber={fragmentNo} slideNumber={slideNo} />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>

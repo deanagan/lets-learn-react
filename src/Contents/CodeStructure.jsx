@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 import { Better, Problematic } from "../Demo/MoveStateDown";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 const structures = [
   {
@@ -201,7 +202,8 @@ const DemoFlexItem = styled.div`
   border: 20px;
 `;
 
-export default function CodeStructure() {
+export default function CodeStructure({slideNumber, fragmentNumber}) {
+  const [isBetterComponent, setIsBetterComponent] = useState(false)
   const codeData = (codes) => {
     const data = codes.map((code) => {
       return (<code
@@ -217,6 +219,17 @@ export default function CodeStructure() {
     return data
   }
 
+  useEffect(() => {
+    if (slideNumber.h === 3) {
+      console.log('setting to better')
+      setIsBetterComponent(fragmentNumber === 1)
+    }
+  }, [slideNumber, fragmentNumber]);
+
+  useLayoutEffect(() => {
+    console.log(fragmentNumber)
+  })
+
   return (
     <section>
       <h4>Code structure - our plan A to improve performance</h4>
@@ -230,7 +243,8 @@ export default function CodeStructure() {
               <StyledPre className="prettyprint">{data}</StyledPre>
             </CodeFlexItem>
             <div>
-              <Problematic />
+
+             { isBetterComponent ? <Better /> : <Problematic /> }
             </div>
           </FlexContainer>
         </section>)
