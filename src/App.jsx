@@ -7,7 +7,8 @@ import "reveal.js/dist/theme/beige.css";
 import "reveal.js/plugin/highlight/monokai.css";
 import Remember from "./Contents/Remember";
 import TableOfContents from "./Contents/TableOfContents";
-import CodeStructure from "./Contents/CodeStructure";
+import MoveStateDown from "./Contents/MoveStateDown";
+import LiftContentUp from "./Contents/LiftContentUp";
 
 
 const code = `
@@ -82,7 +83,8 @@ function App() {
           </section>
           <Remember />
           <TableOfContents />
-          <CodeStructure fragmentNumber={fragmentNo} slideNumber={slideNo} />
+          <MoveStateDown fragmentNumber={fragmentNo} slideNumber={slideNo} />
+          <LiftContentUp fragmentNumber={fragmentNo} slideNumber={slideNo} />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>
