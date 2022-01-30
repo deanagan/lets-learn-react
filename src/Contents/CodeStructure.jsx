@@ -221,14 +221,9 @@ export default function CodeStructure({slideNumber, fragmentNumber}) {
 
   useEffect(() => {
     if (slideNumber.h === 3) {
-      console.log('setting to better')
       setIsBetterComponent(fragmentNumber === 1)
     }
   }, [slideNumber, fragmentNumber]);
-
-  useLayoutEffect(() => {
-    console.log(fragmentNumber)
-  })
 
   return (
     <section>

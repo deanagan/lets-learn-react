@@ -55,12 +55,10 @@ function App() {
 
   const slideChangedEventHandler = useCallback((event) => {
     setSlideNo({h: +event.indexh, v: +event.indexv})
-    console.log(event.index, event.indexv)
   }, []);
 
   const fragmentShownEventHandler = useCallback(event => {
     const {f} = revealRef.current.getIndices()
-    console.log('Fragment: ', f)
     setFragmentNo(f)
   },[]);
 
