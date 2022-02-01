@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import { dedentStrUsing1stLineIndent } from "../Utils/util";
-import { Better, Problematic } from "../Demo/MoveStateDownDemo";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+import { Better, Problematic } from "../Demo/MoveStateDownDemo";
+import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
 const structures = [
   {
@@ -113,26 +114,28 @@ const CodeFlexItem = styled.div`
   width: 70%;
 `;
 
-export default function MoveStateDown({slideNumber, fragmentNumber}) {
-  const [isBetterComponent, setIsBetterComponent] = useState(false)
+export default function MoveStateDown({ slideNumber, fragmentNumber }) {
+  const [isBetterComponent, setIsBetterComponent] = useState(false);
   const codeData = (codes) => {
     const data = codes.map((code) => {
-      return (<code
-        key={code.uniqueId}
-        className={code.uniqueId === 1 ? "javascript" : "fragment javascript"}
-        data-trim
-        data-line-numbers={code.lineNumbers}
-      >
-        {code.src}
-      </code>)
+      return (
+        <code
+          key={code.uniqueId}
+          className={code.uniqueId === 1 ? "javascript" : "fragment javascript"}
+          data-trim
+          data-line-numbers={code.lineNumbers}
+        >
+          {code.src}
+        </code>
+      );
     });
 
-    return data
-  }
+    return data;
+  };
 
   useEffect(() => {
     if (slideNumber.h === 3) {
-      setIsBetterComponent(fragmentNumber === 1)
+      setIsBetterComponent(fragmentNumber === 1);
     }
   }, [slideNumber, fragmentNumber]);
 
@@ -140,20 +143,19 @@ export default function MoveStateDown({slideNumber, fragmentNumber}) {
     <section>
       <h4>Code structure - our plan A to improve performance</h4>
 
-      {structures.map(({uniqueId, text, codes}) => {
+      {structures.map(({ uniqueId, text, codes }) => {
         const data = codeData(codes);
-        return (<section key={uniqueId}>
-          <FlexContainer>
-            <CodeFlexItem>
-              <StyledParagraph>{text}</StyledParagraph>
-              <StyledPre className="prettyprint">{data}</StyledPre>
-            </CodeFlexItem>
-            <div>
-
-             { isBetterComponent ? <Better /> : <Problematic /> }
-            </div>
-          </FlexContainer>
-        </section>)
+        return (
+          <section key={uniqueId}>
+            <FlexContainer>
+              <CodeFlexItem>
+                <StyledParagraph>{text}</StyledParagraph>
+                <StyledPre className="prettyprint">{data}</StyledPre>
+              </CodeFlexItem>
+              <div>{isBetterComponent ? <Better /> : <Problematic />}</div>
+            </FlexContainer>
+          </section>
+        );
       })}
     </section>
   );
