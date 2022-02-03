@@ -21,7 +21,6 @@ function LiftContentUp({ children }) {
   );
 }
 
-
 export function Problematic() {
   const [color, setColor] = useState("red");
   return (

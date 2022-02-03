@@ -6,10 +6,6 @@ const StyledOrderedList = styled.ol`
   }
 `;
 
-// const StyledFragmentedList = styled(FragmentedList)`
-
-// `;
-
 const FragmentedList = ({ items }) => (
   <StyledOrderedList>
     {items.map((content) => (
@@ -22,7 +18,7 @@ const FragmentedList = ({ items }) => (
 
 const contents = [
   { id: 1, value: "React's phases to updating the DOM" },
-  { id: 2, value: "Code structure - our plan A to improve performance" },
+  { id: 2, value: "Code structure - first approach to improve performance" },
   { id: 3, value: "React.memo - when we want to avoid component update" },
   { id: 4, value: "useMemo and useCallback - optimisation tools" },
   {

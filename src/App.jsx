@@ -10,7 +10,6 @@ import RevealHighlight from "reveal.js/plugin/highlight/highlight";
 import LiftContentUp from "./Contents/LiftContentUp";
 import MoveStateDown from "./Contents/MoveStateDown";
 import ReactPhases from "./Contents/ReactPhases";
-import Remember from "./Contents/Remember";
 import TableOfContents from "./Contents/TableOfContents";
 
 const code = `
@@ -81,9 +80,15 @@ function App() {
       <div className="reveal deck">
         <div className="slides">
           <section>
-            <h2 className="title">Let&#39s Learn React!</h2>
+            <h2 className="title">Operative React</h2>
+            <div>
+              adjective: <em>/ˈɒp(ə)rətɪv/</em> -{" "}
+              <em>
+                functioning or having effect. <br />
+                <p>Example: the code is operative!</p>
+              </em>
+            </div>
           </section>
-          <Remember />
           <TableOfContents />
           <ReactPhases />
           <MoveStateDown fragmentNumber={fragmentNo} slideNumber={slideNo} />
