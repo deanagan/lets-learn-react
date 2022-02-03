@@ -1,4 +1,4 @@
-import "mermaid/dist/mermaid";
+import { useEffect } from "react";
 
 const phases = [
   {
@@ -91,6 +91,15 @@ const phases = [
 ];
 
 export default function ReactPhases() {
+  useEffect(() => {
+    import("mermaid/dist/mermaid").then((m) => {
+      m.initialize({
+        startOnLoad: true,
+      });
+      m.init();
+    });
+  }, []);
+
   return (
     <section className="phases">
       <h3>React Render Phases</h3>
