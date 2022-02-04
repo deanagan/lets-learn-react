@@ -116,6 +116,7 @@ const CodeFlexItem = styled.div`
 
 export default function MoveStateDown({ slideNumber, fragmentNumber }) {
   const [isBetterComponent, setIsBetterComponent] = useState(false);
+  // TODO: Move to function component
   const codeData = (codes) => {
     const data = codes.map((code) => {
       return (

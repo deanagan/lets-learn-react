@@ -34,7 +34,7 @@ module.exports = {
   rules: {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "prettier/prettier": ["error", {}, { usePrettierrc: true }],
+    "prettier/prettier": ["error", {}, { usePrettierrc: false }],
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/accessible-emoji": "off",
     "react/prop-types": "off",

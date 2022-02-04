@@ -8,6 +8,7 @@ import Reveal from "reveal.js";
 import RevealHighlight from "reveal.js/plugin/highlight/highlight";
 
 import LiftContentUp from "./Contents/LiftContentUp";
+import MemoHOC from "./Contents/MemoHOC";
 import MoveStateDown from "./Contents/MoveStateDown";
 import ReactPhases from "./Contents/ReactPhases";
 import TableOfContents from "./Contents/TableOfContents";
@@ -93,6 +94,7 @@ function App() {
           <ReactPhases />
           <MoveStateDown fragmentNumber={fragmentNo} slideNumber={slideNo} />
           <LiftContentUp fragmentNumber={fragmentNo} slideNumber={slideNo} />
+          <MemoHOC />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>

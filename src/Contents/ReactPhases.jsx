@@ -98,7 +98,7 @@ export default function ReactPhases() {
       });
       m.init();
     });
-  }, []);
+  });
 
   return (
     <section className="phases">
