@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 
+import CodeDemo from "../Common/CodeDemo";
 import { Better, Problematic } from "../Demo/MoveStateDownDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
@@ -96,43 +96,8 @@ const structures = [
   },
 ];
 
-const StyledParagraph = styled.p`
-  font-size: 0.5em;
-`;
-const StyledPre = styled.pre`
-  code {
-    font-size: 0.65em;
-    line-height: 1.3;
-  }
-`;
-
-const FlexContainer = styled.div`
-  display: flex;
-`;
-
-const CodeFlexItem = styled.div`
-  width: 70%;
-`;
-
 export default function MoveStateDown({ slideNumber, fragmentNumber }) {
   const [isBetterComponent, setIsBetterComponent] = useState(false);
-  // TODO: Move to function component
-  const codeData = (codes) => {
-    const data = codes.map((code) => {
-      return (
-        <code
-          key={code.uniqueId}
-          className={code.uniqueId === 1 ? "javascript" : "fragment javascript"}
-          data-trim
-          data-line-numbers={code.lineNumbers}
-        >
-          {code.src}
-        </code>
-      );
-    });
-
-    return data;
-  };
 
   useEffect(() => {
     if (slideNumber.h === 3) {
@@ -143,21 +108,9 @@ export default function MoveStateDown({ slideNumber, fragmentNumber }) {
   return (
     <section>
       <h4>Code structure - our plan A to improve performance</h4>
-
-      {structures.map(({ uniqueId, text, codes }) => {
-        const data = codeData(codes);
-        return (
-          <section key={uniqueId}>
-            <FlexContainer>
-              <CodeFlexItem>
-                <StyledParagraph>{text}</StyledParagraph>
-                <StyledPre className="prettyprint">{data}</StyledPre>
-              </CodeFlexItem>
-              <div>{isBetterComponent ? <Better /> : <Problematic />}</div>
-            </FlexContainer>
-          </section>
-        );
-      })}
+      <CodeDemo structures={structures}>
+        <div>{isBetterComponent ? <Better /> : <Problematic />}</div>
+      </CodeDemo>
     </section>
   );
 }
