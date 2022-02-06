@@ -92,9 +92,21 @@ function App() {
           </section>
           <TableOfContents />
           <ReactPhases />
-          <MoveStateDown fragmentNumber={fragmentNo} slideNumber={slideNo} />
-          <LiftContentUp fragmentNumber={fragmentNo} slideNumber={slideNo} />
-          <MemoHOC />
+          <MoveStateDown
+            fragmentNumber={fragmentNo}
+            slideNumber={slideNo}
+            slideOrder={3}
+          />
+          <LiftContentUp
+            fragmentNumber={fragmentNo}
+            slideNumber={slideNo}
+            slideOrder={4}
+          />
+          <MemoHOC
+            fragmentNumber={fragmentNo}
+            slideNumber={slideNo}
+            slideOrder={5}
+          />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>

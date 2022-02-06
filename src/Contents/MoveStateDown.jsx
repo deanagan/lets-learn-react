@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
 import { Better, Problematic } from "../Demo/MoveStateDownDemo";
@@ -6,11 +7,11 @@ import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
 const structures = [
   {
-    uniqueId: 1,
+    uniqueId: uuidv4(),
     text: "Move State Down",
     codes: [
       {
-        uniqueId: 1,
+        uniqueId: uuidv4(),
         lineNumbers: "",
         isProblematic: true,
         note: "ExpensiveComponent re-renders each time the color is changed when it shouldn't need to.",
@@ -38,7 +39,7 @@ const structures = [
               }`),
       },
       {
-        uniqueId: 2,
+        uniqueId: uuidv4(),
         lineNumbers: "13,16,17",
         isProblematic: true,
         note: "These items can be moved down",
@@ -66,7 +67,7 @@ const structures = [
               }`),
       },
       {
-        uniqueId: 3,
+        uniqueId: uuidv4(),
         lineNumbers: "",
         isProblematic: false,
         note: "Shifting to the function component MovedStateDown, fixes the problem.",
@@ -96,14 +97,18 @@ const structures = [
   },
 ];
 
-export default function MoveStateDown({ slideNumber, fragmentNumber }) {
+export default function MoveStateDown({
+  slideNumber,
+  fragmentNumber,
+  slideOrder,
+}) {
   const [isBetterComponent, setIsBetterComponent] = useState(false);
 
   useEffect(() => {
-    if (slideNumber.h === 3) {
+    if (slideNumber.h === slideOrder) {
       setIsBetterComponent(fragmentNumber === 1);
     }
-  }, [slideNumber, fragmentNumber]);
+  }, [slideNumber, fragmentNumber, slideOrder]);
 
   return (
     <section>

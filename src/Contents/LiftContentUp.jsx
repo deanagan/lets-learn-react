@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
 import { Better, Problematic } from "../Demo/LiftContentUpDemo";
@@ -6,11 +7,11 @@ import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
 const structures = [
   {
-    uniqueId: 2,
+    uniqueId: uuidv4(),
     text: "Lift Content Up",
     codes: [
       {
-        uniqueId: 1,
+        uniqueId: uuidv4(),
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
               function ExpensiveComponent() {
@@ -36,7 +37,7 @@ const structures = [
               }`),
       },
       {
-        uniqueId: 2,
+        uniqueId: uuidv4(),
         lineNumbers: "13,15,16",
         src: dedentStrUsing1stLineIndent(`
               function ExpensiveComponent() {
@@ -62,7 +63,7 @@ const structures = [
               }`),
       },
       {
-        uniqueId: 3,
+        uniqueId: uuidv4(),
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
               function LiftContentUp({ children }) {
@@ -91,14 +92,18 @@ const structures = [
   },
 ];
 
-export default function LiftContentUp({ slideNumber, fragmentNumber }) {
+export default function LiftContentUp({
+  slideNumber,
+  fragmentNumber,
+  slideOrder,
+}) {
   const [isBetterComponent, setIsBetterComponent] = useState(false);
 
   useEffect(() => {
-    if (slideNumber.h === 4) {
+    if (slideNumber.h === slideOrder) {
       setIsBetterComponent(fragmentNumber === 1);
     }
-  }, [fragmentNumber, slideNumber]);
+  }, [fragmentNumber, slideNumber, slideOrder]);
 
   return (
     <section>

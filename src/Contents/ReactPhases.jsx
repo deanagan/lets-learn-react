@@ -1,8 +1,9 @@
 import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const phases = [
   {
-    uniqueId: 1,
+    uniqueId: uuidv4(),
     drawing: `graph LR;
        render-->reconciliation;
        reconciliation-->commit;
@@ -28,7 +29,7 @@ const phases = [
       `,
   },
   {
-    uniqueId: 2,
+    uniqueId: uuidv4(),
     drawing: `graph LR;
        render-->reconciliation;
        reconciliation-->commit;
@@ -57,7 +58,7 @@ const phases = [
       `,
   },
   {
-    uniqueId: 3,
+    uniqueId: uuidv4(),
     drawing: `graph LR;
        render-->reconciliation;
        reconciliation-->commit;

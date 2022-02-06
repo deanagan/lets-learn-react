@@ -9,23 +9,31 @@ const StyledPre = styled.pre`
     font-size: 0.65em;
     line-height: 1.3;
   }
+  height: 700px;
 `;
 
 const FlexContainer = styled.div`
   display: flex;
+  height: 100%;
 `;
 
 const CodeFlexItem = styled.div`
   width: 70%;
+  height: 100%;
 `;
 
 export default function CodeDemo({ children, structures }) {
   const codeData = (codes) => {
+    const firstCodeUniqueId = codes[0].uniqueId;
     const data = codes.map((code) => {
       return (
         <code
           key={code.uniqueId}
-          className={code.uniqueId === 1 ? "javascript" : "fragment javascript"}
+          className={
+            code.uniqueId === firstCodeUniqueId
+              ? "javascript"
+              : "fragment javascript"
+          }
           data-trim
           data-line-numbers={code.lineNumbers}
         >
