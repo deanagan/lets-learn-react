@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@typescript-eslint/parser": "^5.10.1",
+    "lodash": "^4.17.21",
     "mermaid": "^8.13.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
