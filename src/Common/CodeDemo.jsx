@@ -9,7 +9,7 @@ const StyledPre = styled.pre`
     font-size: 0.65em;
     line-height: 1.3;
   }
-  height: 700px;
+  height: 760px;
 `;
 
 const FlexContainer = styled.div`

@@ -9,6 +9,7 @@ import RevealHighlight from "reveal.js/plugin/highlight/highlight";
 
 import LiftContentUp from "./Contents/LiftContentUp";
 import MemoHOC from "./Contents/MemoHOC";
+import CustomMemoHOC from "./Contents/MemoHOCCustomCompare";
 import MoveStateDown from "./Contents/MoveStateDown";
 import ReactPhases from "./Contents/ReactPhases";
 import TableOfContents from "./Contents/TableOfContents";
@@ -106,6 +107,11 @@ function App() {
             fragmentNumber={fragmentNo}
             slideNumber={slideNo}
             slideOrder={5}
+          />
+          <CustomMemoHOC
+            fragmentNumber={fragmentNo}
+            slideNumber={slideNo}
+            slideOrder={6}
           />
           <section>
             <section>
