@@ -9,14 +9,13 @@ const Button = styled.button`
 
 export default function CustomMemoApp({ usesCustomMemo = false }) {
   const [ball, setBall] = useState({ color: "blue", weight: 0 });
-  const setBallToColor = (color) =>
-    setBall((prevBall) => ({ ...prevBall, color }));
+  const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
   const incrementWeight = () =>
-    setBall((prevBall) => ({ ...prevBall, weight: prevBall.weight + 1 }));
+    setBall((pb) => ({ ...pb, weight: pb.weight + 1 }));
 
   return (
     <div className="App">
-      <h2>Custom Memo</h2>
+      <h3>Custom Memo</h3>
       <Button buttonColor={ball.color} onClick={incrementWeight}>
         Increment Weight
       </Button>

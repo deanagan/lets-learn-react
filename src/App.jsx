@@ -28,8 +28,7 @@ function ExpensiveComponent() {
 `;
 
 function App() {
-  const [fragmentNo, setFragmentNo] = useState(0);
-  const [slideNo, setSlideNo] = useState({ h: 0, v: 0 });
+  const [slideIndex, setSlideIndex] = useState({ h: 0, v: 0, f: 0 });
   const [isRevealReady, setIsRevealReady] = useState(false);
   const revealRef = useRef();
   useEffect(() => {
@@ -56,26 +55,21 @@ function App() {
     setIsRevealReady((r) => !r);
   }, []);
 
-  const slideChangedEventHandler = useCallback((event) => {
-    setSlideNo({ h: +event.indexh, v: +event.indexv });
-  }, []);
-
   // eslint-disable-next-line no-unused-vars
-  const fragmentShownEventHandler = useCallback((_event) => {
-    const { f } = revealRef.current.getIndices();
-    setFragmentNo(f);
+  const slideChangedEventHandler = useCallback((_event) => {
+    const { f, h, v } = revealRef.current.getIndices();
+    setSlideIndex({ f, h, v });
   }, []);
 
   useEffect(() => {
     if (isRevealReady) {
       revealRef.current.on("slidechanged", slideChangedEventHandler);
-      revealRef.current.on("fragmentshown", fragmentShownEventHandler);
-      revealRef.current.on("fragmenthidden", fragmentShownEventHandler);
+      revealRef.current.on("fragmentshown", slideChangedEventHandler);
+      revealRef.current.on("fragmenthidden", slideChangedEventHandler);
       const { f, h, v } = revealRef.current.getIndices();
-      setFragmentNo(f);
-      setSlideNo({ h, v });
+      setSlideIndex({ f, h, v });
     }
-  }, [isRevealReady, slideChangedEventHandler, fragmentShownEventHandler]);
+  }, [isRevealReady, slideChangedEventHandler]);
 
   return (
     <div className="App">
@@ -93,26 +87,10 @@ function App() {
           </section>
           <TableOfContents />
           <ReactPhases />
-          <MoveStateDown
-            fragmentNumber={fragmentNo}
-            slideNumber={slideNo}
-            slideOrder={3}
-          />
-          <LiftContentUp
-            fragmentNumber={fragmentNo}
-            slideNumber={slideNo}
-            slideOrder={4}
-          />
-          <MemoHOC
-            fragmentNumber={fragmentNo}
-            slideNumber={slideNo}
-            slideOrder={5}
-          />
-          <CustomMemoHOC
-            fragmentNumber={fragmentNo}
-            slideNumber={slideNo}
-            slideOrder={6}
-          />
+          <MoveStateDown slideIndex={slideIndex} slideOrder={3} />
+          <LiftContentUp slideIndex={slideIndex} slideOrder={4} />
+          <MemoHOC slideIndex={slideIndex} slideOrder={5} />
+          <CustomMemoHOC slideIndex={slideIndex} slideOrder={6} />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>

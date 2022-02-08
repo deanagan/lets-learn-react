@@ -17,10 +17,9 @@ const customMemo = [
         src: dedentStrUsing1stLineIndent(`
         export default function CustomMemoApp({ usesCustomMemo = false }) {
           const [ball, setBall] = useState({ color: "blue", weight: 0 });
-          const setBallToColor = (color) =>
-            setBall((prevBall) => ({ ...prevBall, color }));
+          const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
           const incrementWeight = () =>
-            setBall((prevBall) => ({ ...prevBall, weight: prevBall.weight + 1 }));
+            setBall((pb) => ({ ...pb, weight: pb.weight + 1 }));
 
           return (
             <div className="App">
@@ -58,14 +57,13 @@ const customMemo = [
 
       {
         uniqueId: uuidv4(),
-        lineNumbers: "17,38",
+        lineNumbers: "16,37",
         src: dedentStrUsing1stLineIndent(`
         export default function CustomMemoApp({ usesCustomMemo = false }) {
           const [ball, setBall] = useState({ color: "blue", weight: 0 });
-          const setBallToColor = (color) =>
-            setBall((prevBall) => ({ ...prevBall, color }));
+          const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
           const incrementWeight = () =>
-            setBall((prevBall) => ({ ...prevBall, weight: prevBall.weight + 1 }));
+            setBall((pb) => ({ ...pb, weight: pb.weight + 1 }));
 
           return (
             <div className="App">
@@ -103,14 +101,13 @@ const customMemo = [
 
       {
         uniqueId: uuidv4(),
-        lineNumbers: "17,38-39",
+        lineNumbers: "16,37-38",
         src: dedentStrUsing1stLineIndent(`
         export default function CustomMemoApp({ usesCustomMemo = false }) {
           const [ball, setBall] = useState({ color: "blue", weight: 0 });
-          const setBallToColor = (color) =>
-            setBall((prevBall) => ({ ...prevBall, color }));
+          const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
           const incrementWeight = () =>
-            setBall((prevBall) => ({ ...prevBall, weight: prevBall.weight + 1 }));
+            setBall((pb) => ({ ...pb, weight: pb.weight + 1 }));
 
           return (
             <div className="App">
@@ -149,14 +146,13 @@ const customMemo = [
 
       {
         uniqueId: uuidv4(),
-        lineNumbers: "17,38-40",
+        lineNumbers: "16,36-39",
         src: dedentStrUsing1stLineIndent(`
         export default function CustomMemoApp({ usesCustomMemo = false }) {
           const [ball, setBall] = useState({ color: "blue", weight: 0 });
-          const setBallToColor = (color) =>
-            setBall((prevBall) => ({ ...prevBall, color }));
+          const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
           const incrementWeight = () =>
-            setBall((prevBall) => ({ ...prevBall, weight: prevBall.weight + 1 }));
+            setBall((pb) => ({ ...pb, weight: pb.weight + 1 }));
 
           return (
             <div className="App">
@@ -187,7 +183,7 @@ const customMemo = [
             </div>
           );
         }
-
+        // or
         const MemoizedBallInfo = memo(BallInfoToMemo, (prop1, prop2) => {
           return prop1.weight === prop2.weight && prop1.color === prop2.color;
         });
@@ -197,22 +193,18 @@ const customMemo = [
   },
 ];
 
-const Header = styled.h4`
+const Header = styled.h3`
   margin-top: 300px;
 `;
 
-export default function CustomMemoHOC({
-  slideNumber,
-  fragmentNumber,
-  slideOrder,
-}) {
+export default function CustomMemoHOC({ slideIndex, slideOrder }) {
   const [usesCustomMemo, setUsesCustomMemo] = useState(false);
 
   useEffect(() => {
-    if (slideNumber.h === slideOrder) {
-      setUsesCustomMemo(fragmentNumber > 0);
+    if (slideIndex.h === slideOrder) {
+      setUsesCustomMemo(slideIndex.f > 0);
     }
-  }, [fragmentNumber, slideNumber, slideOrder]);
+  }, [slideIndex.h, slideIndex.f, slideOrder]);
 
   return (
     <section>

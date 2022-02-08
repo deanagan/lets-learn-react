@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
@@ -92,18 +92,14 @@ const structures = [
   },
 ];
 
-export default function LiftContentUp({
-  slideNumber,
-  fragmentNumber,
-  slideOrder,
-}) {
+export default function LiftContentUp({ slideIndex, slideOrder }) {
   const [isBetterComponent, setIsBetterComponent] = useState(false);
 
-  useEffect(() => {
-    if (slideNumber.h === slideOrder) {
-      setIsBetterComponent(fragmentNumber === 1);
+  useLayoutEffect(() => {
+    if (slideIndex.h === slideOrder) {
+      setIsBetterComponent(slideIndex.f === 1);
     }
-  }, [fragmentNumber, slideNumber, slideOrder]);
+  }, [slideIndex.h, slideIndex.f, slideOrder]);
 
   return (
     <section>

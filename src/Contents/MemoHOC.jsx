@@ -135,16 +135,16 @@ const Header = styled.h4`
   margin-top: 200px;
 `;
 
-export default function MemoHOC({ slideNumber, fragmentNumber, slideOrder }) {
+export default function MemoHOC({ slideIndex, slideOrder }) {
   const [useMemoization, setUseMemoization] = useState(false);
 
   useEffect(() => {
-    if (slideNumber.h === slideOrder) {
-      if (slideNumber.v === 1) {
-        setUseMemoization(fragmentNumber === 0);
+    if (slideIndex.h === slideOrder) {
+      if (slideIndex.v === 1) {
+        setUseMemoization(slideIndex.f === 0);
       }
     }
-  }, [fragmentNumber, slideNumber, slideOrder]);
+  }, [slideIndex.h, slideIndex.v, slideIndex.f, slideOrder]);
 
   return (
     <section>
