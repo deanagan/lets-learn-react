@@ -13,6 +13,7 @@ import CustomMemoHOC from "./Contents/MemoHOCCustomCompare";
 import MoveStateDown from "./Contents/MoveStateDown";
 import ReactPhases from "./Contents/ReactPhases";
 import TableOfContents from "./Contents/TableOfContents";
+import UseEffectAndUseEffectLayout from "./Contents/UseEffectAndUseEffectLayout";
 
 const code = `
 function ExpensiveComponent() {
@@ -91,6 +92,7 @@ function App() {
           <LiftContentUp slideIndex={slideIndex} slideOrder={4} />
           <MemoHOC slideIndex={slideIndex} slideOrder={5} />
           <CustomMemoHOC slideIndex={slideIndex} slideOrder={6} />
+          <UseEffectAndUseEffectLayout slideIndex={slideIndex} slideOrder={7} />
           <section>
             <section>
               <h2 className="title">React Learning Coming Soon 1-1!</h2>
