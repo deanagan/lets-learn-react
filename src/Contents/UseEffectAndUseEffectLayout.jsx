@@ -1,37 +1,37 @@
-import { uuid } from "uuidv4";
+import { v4 as uuidv4 } from "uuid";
 
 // import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
 const useEffectAndUseEffectLayout = [
   {
-    uniqueId: uuid(),
+    uniqueId: uuidv4(),
     value:
-      "The Effect Hook lets you perform side effects in function components",
+      "The useEffect Hook lets you perform side effects in function components",
   },
   {
-    uniqueId: uuid(),
+    uniqueId: uuidv4(),
     value:
       "Is equivalent to componentDidMount, componentDidUpdate, and componentWillUnmount combined from class based components",
   },
   {
-    uniqueId: uuid(),
+    uniqueId: uuidv4(),
     value:
       "useEffect hooks are executed after render, when DOM updates have been done",
   },
   {
-    uniqueId: uuid(),
+    uniqueId: uuidv4(),
     value:
       "useEffect is designed to handle one concern, so it is best to use multiple useEffect to separate concerns",
   },
   {
-    uniqueId: uuid(),
+    uniqueId: uuidv4(),
     value:
       "useEffect runs both after the first render (regardless of dependency) and after every update",
   },
   {
-    uniqueId: uuid(),
+    uniqueId: uuidv4(),
     value:
-      "Because useEffect runs when its dependencies change, care must be take to consider Javascript's referential equality rules to avoid infinite loops",
+      "Because useEffect runs when its dependencies change, care must be taken to consider Javascript's referential equality rules to avoid infinite loops",
   },
 ];
 
