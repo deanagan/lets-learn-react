@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const CodeDemo = styled.div`
   z-index: 3;
-`
+`;
 
 function ExpensiveComponent() {
   let renderCount = useRef(0);
