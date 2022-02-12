@@ -1,6 +1,18 @@
+import { useLayoutEffect, useState } from "react";
+import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
-// import { dedentStrUsing1stLineIndent } from "../Utils/util";
+import CodeDemo from "../Common/CodeDemo";
+import ColorAndCountDemo from "../Demo/ColorAndCountDemo";
+import { dedentStrUsing1stLineIndent } from "../Utils/util";
+
+const Header = styled.h3`
+  && {
+    text-transform: none;
+  }
+
+  margin-top: 200px;
+`;
 
 const useEffectAndUseEffectLayout = [
   {
@@ -33,113 +45,288 @@ const useEffectAndUseEffectLayout = [
     value:
       "Because useEffect runs when its dependencies change, care must be taken to consider Javascript's referential equality rules to avoid infinite loops",
   },
+  {
+    uniqueId: uuidv4(),
+    value:
+      "useLayoutEffect runs synchronously immediately after React has performed all DOM mutations.",
+  },
+  {
+    uniqueId: uuidv4(),
+    value:
+      "useLayoutEffect is useful for mutating the DOM before the browser has a chance to 'paint' the changes.",
+  },
 ];
 
-// const structures = [
-//   {
-//     uniqueId: uuidv4(),
-//     text: "Lift Content Up",
-//     codes: [
-//       {
-//         uniqueId: uuidv4(),
-//         lineNumbers: "",
-//         src: dedentStrUsing1stLineIndent(`
-//               function ExpensiveComponent() {
-//                 const renderCount = useRef(0);
-//                 useEffect(() => {
-//                   const t = setTimeout(() => console.log("expensive tree!"), 2000);
-//                   renderCount.current += 1;
-//                   return () => clearTimeout(t);
-//                 });
-//                 const totalRender = renderCount.current;
-//                 return <p>I am a very slow component, rendered {totalRender} times!.</p>;
-//               }
+const structures = [
+  {
+    uniqueId: uuidv4(),
+    text: "using objects as useEffect dependencies",
+    codes: [
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+        export default function ColorAndCountDemo() {
+          const [colorAndCount, setColorAndCount] = useState(() => ({
+            count: 0,
+            color: colorChoices.find((c) => c.name === "blue"),
+          }));
 
-//               export default function Problematic() {
-//                 const [color, setColor] = useState("red");
-//                 return (
-//                   <div style={{ color }}>
-//                     <input value={color} onChange={(e) => setColor(e.target.value)} />
-//                     <p>Hello, world!</p>
-//                     <ExpensiveComponent />
-//                   </div>
-//                 );
-//               }`),
-//       },
-//       {
-//         uniqueId: uuidv4(),
-//         lineNumbers: "13,15,16",
-//         src: dedentStrUsing1stLineIndent(`
-//               function ExpensiveComponent() {
-//                 const renderCount = useRef(0);
-//                 useEffect(() => {
-//                   const t = setTimeout(() => console.log("expensive tree!"), 2000);
-//                   renderCount.current += 1;
-//                   return () => clearTimeout(t);
-//                 });
-//                 const totalRender = renderCount.current;
-//                 return <p>I am a very slow component, rendered {totalRender} times!.</p>;
-//               }
+          const setColor = (color) => {
+            setColorAndCount((ccc) => ({
+              count: ccc.count,
+              color: colorChoices.find((c) => c.name === color),
+            }));
+          };
 
-//               export default function Problematic() {
-//                 const [color, setColor] = useState("red");
-//                 return (
-//                   <div style={{ color }}>
-//                     <input value={color} onChange={(e) => setColor(e.target.value)} />
-//                     <p>Hello, world!</p>
-//                     <ExpensiveComponent />
-//                   </div>
-//                 );
-//               }`),
-//       },
-//       {
-//         uniqueId: uuidv4(),
-//         lineNumbers: "",
-//         src: dedentStrUsing1stLineIndent(`
-//               function LiftContentUp({ children }) {
-//                 const [color, setColor] = useState("red");
-//                 return (
-//                   <div style={{ color }}>
-//                     <input value={color} onChange={(e) => setColor(e.target.value)} />
-//                     {children}
-//                   </div>
-//                 );
-//               }
+          const incrementCount = () => {
+            setColorAndCount((ccc) => ({ count: ccc.count + 1, color: ccc.color }));
+          };
 
-//               export default function Better() {
-//                 return (
-//                   <LiftContentUp>
-//                     <p>Hello, world!</p>
-//                     <ExpensiveComponent />
-//                   </LiftContentUp>
-//                 );
-//               }
-//               `),
-//       },
-//     ],
-//     codeSandBoxLink:
-//       "https://codesandbox.io/s/lift-up-content-qgyyn?file=/src/Better.jsx:664-813",
-//   },
-// ];
+          return (
+            <div>
+              <Controls>
+                <button type="button" onClick={incrementCount}>
+                  Increment
+                </button>
+                <Button onClick={() => setColor("red")}>Red</Button>
+                <Button onClick={() => setColor("green")}>Green</Button>
+                <Button onClick={() => setColor("blue")}>Blue</Button>
+              </Controls>
+              <ColorAndCountComponent colorAndCount={colorAndCount} />
+            </div>
+          );
+        }
+        `),
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "28",
+        src: dedentStrUsing1stLineIndent(`
+        export default function ColorAndCountDemo() {
+          const [colorAndCount, setColorAndCount] = useState(() => ({
+            count: 0,
+            color: colorChoices.find((c) => c.name === "blue"),
+          }));
+
+          const setColor = (color) => {
+            setColorAndCount((ccc) => ({
+              count: ccc.count,
+              color: colorChoices.find((c) => c.name === color),
+            }));
+          };
+
+          const incrementCount = () => {
+            setColorAndCount((ccc) => ({ count: ccc.count + 1, color: ccc.color }));
+          };
+
+          return (
+            <div>
+              <Controls>
+                <button type="button" onClick={incrementCount}>
+                  Increment
+                </button>
+                <Button onClick={() => setColor("red")}>Red</Button>
+                <Button onClick={() => setColor("green")}>Green</Button>
+                <Button onClick={() => setColor("blue")}>Blue</Button>
+              </Controls>
+              <ColorAndCountComponent colorAndCount={colorAndCount} />
+            </div>
+          );
+        }
+        `),
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+        function ColorAndCountComponent({ colorAndCount }) {
+          const [color, setColor] = useState("");
+          const [count, setCount] = useState(0);
+          const [renderCount, setRenderCount] = useState(0);
+
+          useEffect(() => {
+            setRenderCount((c) => c + 1);
+            if (colorAndCount) {
+              const { count, color } = colorAndCount;
+              setCount(count);
+              setColor(color.name);
+            }
+          }, [colorAndCount]);
+
+          return (
+            <>
+              <div>Render Count: {renderCount}</div>
+              <ColorInfo style={{ color }}>
+                Color: {color} Count: {count}
+              </ColorInfo>
+            </>
+          );
+        }`),
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "13-16",
+        src: dedentStrUsing1stLineIndent(`
+        function ColorAndCountComponent({ colorAndCount }) {
+          const [color, setColor] = useState("");
+          const [count, setCount] = useState(0);
+          const [renderCount, setRenderCount] = useState(0);
+
+          useEffect(() => {
+            setRenderCount((c) => c + 1);
+            if (colorAndCount) {
+              const { count, color } = colorAndCount;
+              setCount(count);
+              setColor(color.name);
+            }
+          }, [colorAndCount]);
+          // We cannot change to color.count and color.color.name because
+          // we check the full object for null/undefined. This is if
+          // we follow the exhaustive-deps react-hooks plugin eslint rule.
+
+          return (
+            <>
+              <div>Render Count: {renderCount}</div>
+              <ColorInfo style={{ color }}>
+                Color: {color} Count: {count}
+              </ColorInfo>
+            </>
+          );
+        }`),
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+        const useMemoObjCompare = (value) => {
+          const prevRef = useRef();
+          const previous = prevRef.current;
+          const isObjEqual = isEqual(previous, value);
+          useEffect(() => {
+            if (!isObjEqual) {
+              prevRef.current = value;
+            }
+          });
+          return isObjEqual ? previous : value;
+        };
+
+        function ColorAndCountComponentWithMemo({ colorAndCount }) {
+          const [color, setColor] = useState("");
+          const [count, setCount] = useState(0);
+          const [renderCount, setRenderCount] = useState(0);
+          const colorAndCountMemo = useMemoObjCompare(colorAndCount);
+
+          useEffect(() => {
+            setRenderCount((c) => c + 1);
+            if (colorAndCountMemo) {
+              const { count, color } = colorAndCount;
+              setCount(count);
+              setColor(color.name);
+            }
+          }, [colorAndCountMemo]);
+
+          return (
+            <>
+              <div>Render Count: {renderCount}</div>
+              <ColorInfo style={{ color }}>
+                Color: {color} Count: {count}
+              </ColorInfo>
+            </>
+          );
+        }`),
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+        export function useDeepCompareMemoize(value) {
+          const ref = useRef(value);
+          const changeTrigger = useRef(0);
+
+          if (!isEqual(value, ref.current)) {
+            ref.current = value;
+            changeTrigger.current += 1;
+          }
+          // disable exhaustive hooks for this because we want the
+          // memoization to trigger from the increment
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          return useMemo(() => ref.current, [changeTrigger.current]);
+        }
+
+        function isPrimitive(value) {
+          return value !== Object(value);
+        }
+
+        function useDeepCompareEffect(callback, dependencies) {
+          if (!dependencies || !dependencies.length) {
+            throw "Invalid dependencies.";
+          }
+
+          if (dependencies.every(isPrimitive)) {
+            throw "All dependencies are primitive. Just use useEffect.";
+          }
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          return useEffect(callback, useDeepCompareMemoize(dependencies));
+        }
+        `),
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+        export function ColorAndCountComponentWithUseDeepEffect({ colorAndCount }) {
+          const [color, setColor] = useState("");
+          const [count, setCount] = useState(0);
+          const [renderCount, setRenderCount] = useState(0);
+
+          useDeepCompareEffect(() => {
+            setRenderCount((c) => c + 1);
+            if (colorAndCount) {
+              const { count, color } = colorAndCount;
+              setCount(count);
+              setColor(color.name);
+            }
+          }, [colorAndCount]);
+
+          return (
+            <>
+              <div>Render Count: {renderCount}</div>
+              <ColorInfo style={{ color }}>
+                Color: {color} Count: {count}
+              </ColorInfo>
+            </>
+          );
+        }`),
+      },
+    ],
+    codeSandBoxLink:
+      "https://codesandbox.io/s/lift-up-content-qgyyn?file=/src/Better.jsx:664-813",
+  },
+];
 
 export default function UseEffectAndUseEffectLayout({
-  // eslint-disable-next-line no-unused-vars
   slideIndex,
-  // eslint-disable-next-line no-unused-vars
   slideOrder,
 }) {
-  // const [isBetterComponent, setIsBetterComponent] = useState(false);
+  const [choiceComponent, setChoiceComponent] = useState("default");
 
-  // useLayoutEffect(() => {
-  //   if (slideIndex.h === slideOrder) {
-  //     setIsBetterComponent(slideIndex.f === 1);
-  //   }
-  // }, [slideIndex.h, slideIndex.f, slideOrder]);
+  useLayoutEffect(() => {
+    if (slideIndex.h === slideOrder) {
+      if (slideIndex.f === 3) {
+        setChoiceComponent("useMemoCompare");
+      } else if (slideIndex.f === 4 || slideIndex.f === 5) {
+        setChoiceComponent("useDeepCompareEffect");
+      } else {
+        setChoiceComponent("default");
+      }
+    }
+  }, [slideIndex.h, slideIndex.f, slideOrder]);
 
   return (
     <section>
       <section>
-        <h3>React.memo</h3>
+        <Header>useEffect and useEffectLayout</Header>
         <ul>
           {useEffectAndUseEffectLayout.map((e) => (
             <li className="fragment" key={e.uniqueId}>
@@ -149,12 +336,12 @@ export default function UseEffectAndUseEffectLayout({
         </ul>
       </section>
 
-      {/* <section>
-        <h4>Code structure - our plan A to improve performance</h4>
+      <section>
+        <Header>UseEffect and Objects</Header>
         <CodeDemo structures={structures}>
-          <div>{isBetterComponent ? <Better /> : <Problematic />}</div>
+          <ColorAndCountDemo choiceComponent={choiceComponent} />
         </CodeDemo>
-      </section> */}
+      </section>
     </section>
   );
 }
