@@ -14,7 +14,7 @@ const Header = styled.h3`
   margin-top: 200px;
 `;
 
-const useEffectAndUseEffectLayout = [
+const useEffectAndUseLayoutEffect = [
   {
     uniqueId: uuidv4(),
     value:
@@ -86,9 +86,7 @@ const structures = [
           return (
             <div>
               <Controls>
-                <button type="button" onClick={incrementCount}>
-                  Increment
-                </button>
+                <Button onClick={incrementCount}>Increment</Button>
                 <Button onClick={() => setColor("red")}>Red</Button>
                 <Button onClick={() => setColor("green")}>Green</Button>
                 <Button onClick={() => setColor("blue")}>Blue</Button>
@@ -123,9 +121,7 @@ const structures = [
           return (
             <div>
               <Controls>
-                <button type="button" onClick={incrementCount}>
-                  Increment
-                </button>
+                <Button onClick={incrementCount}>Increment</Button>
                 <Button onClick={() => setColor("red")}>Red</Button>
                 <Button onClick={() => setColor("green")}>Green</Button>
                 <Button onClick={() => setColor("blue")}>Blue</Button>
@@ -299,13 +295,49 @@ const structures = [
           );
         }`),
       },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+        export function ColorAndCountComponentWithUseDeepEffectAndCountMultiplier({
+          colorAndCount,
+        }) {
+          const [color, setColor] = useState("");
+          const [count, setCount] = useState(0);
+          const [renderCount, setRenderCount] = useState(0);
+          const [multiplied, setMultiplied] = useState(colorAndCount.count);
+
+          useDeepCompareEffect(() => {
+            setRenderCount((c) => c + 1);
+            if (colorAndCount) {
+              const { count, color } = colorAndCount;
+              setCount(count);
+              setColor(color.name);
+            }
+          }, [colorAndCount]);
+
+          useEffect(() => {
+            setMultiplied((m) => m * colorAndCount.count);
+          }, [colorAndCount.count]);
+
+          return (
+            <>
+              <div>Render Count: {renderCount}</div>
+              <ColorInfo style={{ color }}>
+                Color: {color} Count: {count} Multiplied: {multiplied}
+              </ColorInfo>
+            </>
+          );
+        }
+        `),
+      },
     ],
     codeSandBoxLink:
       "https://codesandbox.io/s/lift-up-content-qgyyn?file=/src/Better.jsx:664-813",
   },
 ];
 
-export default function UseEffectAndUseEffectLayout({
+export default function UseEffectAndUseLayoutEffect({
   slideIndex,
   slideOrder,
 }) {
@@ -317,6 +349,8 @@ export default function UseEffectAndUseEffectLayout({
         setChoiceComponent("useMemoCompare");
       } else if (slideIndex.f === 4 || slideIndex.f === 5) {
         setChoiceComponent("useDeepCompareEffect");
+      } else if (slideIndex.f === 6) {
+        setChoiceComponent("multiplier");
       } else {
         setChoiceComponent("default");
       }
@@ -328,7 +362,7 @@ export default function UseEffectAndUseEffectLayout({
       <section>
         <Header>useEffect and useEffectLayout</Header>
         <ul>
-          {useEffectAndUseEffectLayout.map((e) => (
+          {useEffectAndUseLayoutEffect.map((e) => (
             <li className="fragment" key={e.uniqueId}>
               {e.value}
             </li>
