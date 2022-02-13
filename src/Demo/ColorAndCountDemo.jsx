@@ -225,7 +225,7 @@ export function ColorAndCountComponentWithUseDeepEffectAndUseLayoutEffect({
   const [renderCount, setRenderCount] = useState(0);
 
   useDeepCompareEffect(() => {
-    setRenderCount((c) => c + 1);
+    //setRenderCount((c) => c + 1);
     if (colorAndCount) {
       const { count, color } = colorAndCount;
       setCount(count);

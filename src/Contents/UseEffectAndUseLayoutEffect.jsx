@@ -327,7 +327,7 @@ const structures = [
       },
       {
         uniqueId: uuidv4(),
-        lineNumbers: "17-19",
+        lineNumbers: "9,17-19",
         src: dedentStrUsing1stLineIndent(`
         export function ColorAndCountComponentWithUseDeepEffectAndUseLayoutEffect({
           colorAndCount,
@@ -337,7 +337,7 @@ const structures = [
           const [renderCount, setRenderCount] = useState(0);
 
           useDeepCompareEffect(() => {
-            setRenderCount((c) => c + 1);
+            // setRenderCount((c) => c + 1);
             if (colorAndCount) {
               const { count, color } = colorAndCount;
               setCount(count);
