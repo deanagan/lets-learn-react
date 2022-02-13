@@ -99,7 +99,7 @@ const structures = [
       },
       {
         uniqueId: uuidv4(),
-        lineNumbers: "28",
+        lineNumbers: "26",
         src: dedentStrUsing1stLineIndent(`
         export default function ColorAndCountDemo() {
           const [colorAndCount, setColorAndCount] = useState(() => ({
@@ -152,7 +152,7 @@ const structures = [
 
           return (
             <>
-              <div>Render Count: {renderCount}</div>
+              <div>UseEffect Run Count {renderCount}</div>
               <ColorInfo style={{ color }}>
                 Color: {color} Count: {count}
               </ColorInfo>
@@ -183,7 +183,7 @@ const structures = [
 
           return (
             <>
-              <div>Render Count: {renderCount}</div>
+              <div>UseEffect Run Count {renderCount}</div>
               <ColorInfo style={{ color }}>
                 Color: {color} Count: {count}
               </ColorInfo>
@@ -224,7 +224,7 @@ const structures = [
 
           return (
             <>
-              <div>Render Count: {renderCount}</div>
+              <div>UseEffect Run Count {renderCount}</div>
               <ColorInfo style={{ color }}>
                 Color: {color} Count: {count}
               </ColorInfo>
@@ -236,7 +236,7 @@ const structures = [
         uniqueId: uuidv4(),
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
-        export function useDeepCompareMemoize(value) {
+        function useDeepCompareMemoize(value) {
           const ref = useRef(value);
           const changeTrigger = useRef(0);
 
@@ -287,7 +287,7 @@ const structures = [
 
           return (
             <>
-              <div>Render Count: {renderCount}</div>
+              <div>UseEffect Run Count {renderCount}</div>
               <ColorInfo style={{ color }}>
                 Color: {color} Count: {count}
               </ColorInfo>
@@ -299,13 +299,12 @@ const structures = [
         uniqueId: uuidv4(),
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
-        export function ColorAndCountComponentWithUseDeepEffectAndCountMultiplier({
+        export function ColorAndCountComponentWithUseDeepEffectAndUseLayoutEffect({
           colorAndCount,
         }) {
           const [color, setColor] = useState("");
           const [count, setCount] = useState(0);
           const [renderCount, setRenderCount] = useState(0);
-          const [multiplied, setMultiplied] = useState(colorAndCount.count);
 
           useDeepCompareEffect(() => {
             setRenderCount((c) => c + 1);
@@ -316,20 +315,49 @@ const structures = [
             }
           }, [colorAndCount]);
 
-          useEffect(() => {
-            setMultiplied((m) => m * colorAndCount.count);
-          }, [colorAndCount.count]);
-
           return (
             <>
-              <div>Render Count: {renderCount}</div>
+              <div>UseEffect Run Count {renderCount}</div>
               <ColorInfo style={{ color }}>
-                Color: {color} Count: {count} Multiplied: {multiplied}
+                Color: {color} Count: {count}
               </ColorInfo>
             </>
           );
-        }
-        `),
+        }`),
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "17-19",
+        src: dedentStrUsing1stLineIndent(`
+        export function ColorAndCountComponentWithUseDeepEffectAndUseLayoutEffect({
+          colorAndCount,
+        }) {
+          const [color, setColor] = useState("");
+          const [count, setCount] = useState(0);
+          const [renderCount, setRenderCount] = useState(0);
+
+          useDeepCompareEffect(() => {
+            setRenderCount((c) => c + 1);
+            if (colorAndCount) {
+              const { count, color } = colorAndCount;
+              setCount(count);
+              setColor(color.name);
+            }
+          }, [colorAndCount]);
+
+          useLayoutEffect(() => {
+            setRenderCount((c) => c + 1);
+          }, []);
+
+          return (
+            <>
+              <div>UseEffect Run Count {renderCount}</div>
+              <ColorInfo style={{ color }}>
+                Color: {color} Count: {count}
+              </ColorInfo>
+            </>
+          );
+        }`),
       },
     ],
     codeSandBoxLink:
@@ -344,23 +372,24 @@ export default function UseEffectAndUseLayoutEffect({
   const [choiceComponent, setChoiceComponent] = useState("default");
 
   useLayoutEffect(() => {
-    if (slideIndex.h === slideOrder) {
+    setChoiceComponent("default");
+    if (slideIndex.h === slideOrder && slideIndex.v === 1) {
       if (slideIndex.f === 3) {
         setChoiceComponent("useMemoCompare");
       } else if (slideIndex.f === 4 || slideIndex.f === 5) {
         setChoiceComponent("useDeepCompareEffect");
       } else if (slideIndex.f === 6) {
-        setChoiceComponent("multiplier");
-      } else {
-        setChoiceComponent("default");
+        setChoiceComponent("useNoLayoutEffect");
+      } else if (slideIndex.f === 7) {
+        setChoiceComponent("useLayoutEffect");
       }
     }
-  }, [slideIndex.h, slideIndex.f, slideOrder]);
+  }, [slideIndex.h, slideIndex.f, slideIndex.v, slideOrder]);
 
   return (
     <section>
       <section>
-        <Header>useEffect and useEffectLayout</Header>
+        <Header>useEffect and useLayoutEffect</Header>
         <ul>
           {useEffectAndUseLayoutEffect.map((e) => (
             <li className="fragment" key={e.uniqueId}>
@@ -371,7 +400,7 @@ export default function UseEffectAndUseLayoutEffect({
       </section>
 
       <section>
-        <Header>UseEffect and Objects</Header>
+        <Header>UseEffect and Memoization</Header>
         <CodeDemo structures={structures}>
           <ColorAndCountDemo choiceComponent={choiceComponent} />
         </CodeDemo>

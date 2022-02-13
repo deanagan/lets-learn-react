@@ -1,5 +1,5 @@
 import { isEqual } from "lodash";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
 const Button = styled.button`
@@ -26,6 +26,9 @@ export default function ColorAndCountDemo({ choiceComponent = "default" }) {
     count: 0,
     color: colorChoices.find((c) => c.name === "blue"),
   }));
+  const [component, setComponent] = useState(
+    <ColorAndCountComponent colorAndCount={colorAndCount} />
+  );
 
   const setColor = (color) => {
     setColorAndCount((ccc) => ({
@@ -38,25 +41,37 @@ export default function ColorAndCountDemo({ choiceComponent = "default" }) {
     setColorAndCount((ccc) => ({ count: ccc.count + 1, color: ccc.color }));
   };
 
+  useLayoutEffect(() => {
+    setComponent(
+      choiceComponent === "useMemoCompare" ? (
+        <ColorAndCountComponentWithMemo colorAndCount={colorAndCount} />
+      ) : choiceComponent === "useDeepCompareEffect" ? (
+        <ColorAndCountComponentWithUseDeepEffect
+          colorAndCount={colorAndCount}
+        />
+      ) : choiceComponent === "useNoLayoutEffect" ? (
+        <ColorAndCountComponentWithUseDeepEffectAndWithoutUseLayoutEffect
+          colorAndCount={colorAndCount}
+        />
+      ) : choiceComponent === "useLayoutEffect" ? (
+        <ColorAndCountComponentWithUseDeepEffectAndUseLayoutEffect
+          colorAndCount={colorAndCount}
+        />
+      ) : (
+        <ColorAndCountComponent colorAndCount={colorAndCount} />
+      )
+    );
+  }, [choiceComponent, colorAndCount]);
+
   return (
     <div>
       <Controls>
-        <button type="button" onClick={incrementCount}>
-          Increment
-        </button>
+        <Button onClick={incrementCount}>Increment</Button>
         <Button onClick={() => setColor("red")}>Red</Button>
         <Button onClick={() => setColor("green")}>Green</Button>
         <Button onClick={() => setColor("blue")}>Blue</Button>
       </Controls>
-      {choiceComponent === "default" ? (
-        <ColorAndCountComponent colorAndCount={colorAndCount} />
-      ) : choiceComponent === "useMemoCompare" ? (
-        <ColorAndCountComponentWithMemo colorAndCount={colorAndCount} />
-      ) : (
-        <ColorAndCountComponentWithUseDeepEffect
-          colorAndCount={colorAndCount}
-        />
-      )}
+      <>{component}</>
     </div>
   );
 }
@@ -77,7 +92,7 @@ function ColorAndCountComponent({ colorAndCount }) {
 
   return (
     <>
-      <div>Render Count: {renderCount}</div>
+      <div>UseEffect Run Count {renderCount}</div>
       <ColorInfo style={{ color }}>
         Color: {color} Count: {count}
       </ColorInfo>
@@ -114,7 +129,7 @@ export function ColorAndCountComponentWithMemo({ colorAndCount }) {
 
   return (
     <>
-      <div>Render Count: {renderCount}</div>
+      <div>UseEffect Run Count {renderCount}</div>
       <ColorInfo style={{ color }}>
         Color: {color} Count: {count}
       </ColorInfo>
@@ -122,7 +137,7 @@ export function ColorAndCountComponentWithMemo({ colorAndCount }) {
   );
 }
 
-export function useDeepCompareMemoize(value) {
+function useDeepCompareMemoize(value) {
   const ref = useRef(value);
   const changeTrigger = useRef(0);
 
@@ -168,7 +183,63 @@ export function ColorAndCountComponentWithUseDeepEffect({ colorAndCount }) {
 
   return (
     <>
-      <div>Render Count: {renderCount}</div>
+      <div>UseEffect Run Count {renderCount}</div>
+      <ColorInfo style={{ color }}>
+        Color: {color} Count: {count}
+      </ColorInfo>
+    </>
+  );
+}
+
+export function ColorAndCountComponentWithUseDeepEffectAndWithoutUseLayoutEffect({
+  colorAndCount,
+}) {
+  const [color, setColor] = useState("");
+  const [count, setCount] = useState(0);
+  const [renderCount, setRenderCount] = useState(0);
+
+  useDeepCompareEffect(() => {
+    setRenderCount((c) => c + 1);
+    if (colorAndCount) {
+      const { count, color } = colorAndCount;
+      setCount(count);
+      setColor(color.name);
+    }
+  }, [colorAndCount]);
+
+  return (
+    <>
+      <div>UseEffect Run Count {renderCount}</div>
+      <ColorInfo style={{ color }}>
+        Color: {color} Count: {count}
+      </ColorInfo>
+    </>
+  );
+}
+
+export function ColorAndCountComponentWithUseDeepEffectAndUseLayoutEffect({
+  colorAndCount,
+}) {
+  const [color, setColor] = useState("");
+  const [count, setCount] = useState(0);
+  const [renderCount, setRenderCount] = useState(0);
+
+  useDeepCompareEffect(() => {
+    setRenderCount((c) => c + 1);
+    if (colorAndCount) {
+      const { count, color } = colorAndCount;
+      setCount(count);
+      setColor(color.name);
+    }
+  }, [colorAndCount]);
+
+  useLayoutEffect(() => {
+    setRenderCount((c) => c + 1);
+  }, []);
+
+  return (
+    <>
+      <div>UseEffect Run Count {renderCount}</div>
       <ColorInfo style={{ color }}>
         Color: {color} Count: {count}
       </ColorInfo>
