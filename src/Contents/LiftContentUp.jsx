@@ -2,7 +2,13 @@ import { useLayoutEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
-import { Better, Problematic } from "../Demo/LiftContentUpDemo";
+// eslint-disable-next-line no-unused-vars
+import {
+  //Better,
+  Better2,
+  //Better3,
+  Problematic,
+} from "../Demo/LiftContentUpDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
 const structures = [
@@ -105,7 +111,7 @@ export default function LiftContentUp({ slideIndex, slideOrder }) {
     <section>
       <h4>Code structure - our plan A to improve performance</h4>
       <CodeDemo structures={structures}>
-        <div>{isBetterComponent ? <Better /> : <Problematic />}</div>
+        <div>{isBetterComponent ? <Better2 /> : <Problematic />}</div>
       </CodeDemo>
     </section>
   );
