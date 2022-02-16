@@ -1,9 +1,19 @@
 import { useLayoutEffect, useState } from "react";
+import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
 import { Better, Better2, Problematic } from "../Demo/LiftContentUpDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
+
+const Comment = styled.p`
+  font-size: 1.5rem;
+`;
+
+const BorderedApp = styled.div`
+  border-style: solid;
+  margin-right: 20px;
+`;
 
 const structures = [
   {
@@ -118,6 +128,7 @@ const structures = [
 
 export default function LiftContentUp({ slideIndex, slideOrder }) {
   const [isBetterComponent, setIsBetterComponent] = useState("");
+  const [comment, setComment] = useState("");
 
   useLayoutEffect(() => {
     if (slideIndex.h === slideOrder) {
@@ -128,6 +139,10 @@ export default function LiftContentUp({ slideIndex, slideOrder }) {
       } else {
         setIsBetterComponent("");
       }
+      const [{ codes }] = structures;
+      if (codes?.length) {
+        setComment(codes[slideIndex.f + 1].comment ?? "");
+      }
     }
   }, [slideIndex.h, slideIndex.f, slideOrder]);
 
@@ -135,7 +150,7 @@ export default function LiftContentUp({ slideIndex, slideOrder }) {
     <section>
       <h4>Code structure - our plan A to improve performance</h4>
       <CodeDemo structures={structures}>
-        <div>
+        <BorderedApp>
           {isBetterComponent === "better1" ? (
             <Better />
           ) : isBetterComponent === "better2" ? (
@@ -143,7 +158,9 @@ export default function LiftContentUp({ slideIndex, slideOrder }) {
           ) : (
             <Problematic />
           )}
-        </div>
+          <hr />
+          <Comment>{comment}</Comment>
+        </BorderedApp>
       </CodeDemo>
     </section>
   );
