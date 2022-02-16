@@ -40,3 +40,20 @@ export function Better() {
     </LiftContentUp>
   );
 }
+
+export function Better2() {
+  return (
+    <ExpensiveComponentWrapper expensiveComponent={<ExpensiveComponent />} />
+  );
+}
+
+function ExpensiveComponentWrapper(props) {
+  const [color, setColor] = useState("red");
+  return (
+    <div style={{ color }}>
+      <input value={color} onChange={(e) => setColor(e.target.value)} />
+      <p>Hello, world!</p>
+      {props.expensiveComponent}
+    </div>
+  );
+}

@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
-import { Better, Problematic } from "../Demo/LiftContentUpDemo";
+import { Better, Better2, Problematic } from "../Demo/LiftContentUpDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
 const structures = [
@@ -86,6 +86,30 @@ const structures = [
               }
               `),
       },
+      {
+        comment:
+          "Lift component up to a parent, then pass the expensive component down as a prop",
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+          export function Better2() {
+            return (
+              <ExpensiveComponentWrapper expensiveComponent={<ExpensiveComponent />} />
+            );
+          }
+
+          function ExpensiveComponentWrapper(props) {
+            const [color, setColor] = useState("red");
+            return (
+              <div style={{ color }}>
+                <input value={color} onChange={(e) => setColor(e.target.value)} />
+                <p>Hello, world!</p>
+                {props.expensiveComponent}
+              </div>
+            );
+          }
+        `),
+      },
     ],
     codeSandBoxLink:
       "https://codesandbox.io/s/lift-up-content-qgyyn?file=/src/Better.jsx:664-813",
@@ -93,11 +117,17 @@ const structures = [
 ];
 
 export default function LiftContentUp({ slideIndex, slideOrder }) {
-  const [isBetterComponent, setIsBetterComponent] = useState(false);
+  const [isBetterComponent, setIsBetterComponent] = useState("");
 
   useLayoutEffect(() => {
     if (slideIndex.h === slideOrder) {
-      setIsBetterComponent(slideIndex.f === 1);
+      if (slideIndex.f === 1) {
+        setIsBetterComponent("better1");
+      } else if (slideIndex.f === 2) {
+        setIsBetterComponent("better2");
+      } else {
+        setIsBetterComponent("");
+      }
     }
   }, [slideIndex.h, slideIndex.f, slideOrder]);
 
@@ -105,7 +135,15 @@ export default function LiftContentUp({ slideIndex, slideOrder }) {
     <section>
       <h4>Code structure - our plan A to improve performance</h4>
       <CodeDemo structures={structures}>
-        <div>{isBetterComponent ? <Better /> : <Problematic />}</div>
+        <div>
+          {isBetterComponent === "better1" ? (
+            <Better />
+          ) : isBetterComponent === "better2" ? (
+            <Better2 />
+          ) : (
+            <Problematic />
+          )}
+        </div>
       </CodeDemo>
     </section>
   );
