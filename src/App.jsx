@@ -14,19 +14,7 @@ import MoveStateDown from "./Contents/MoveStateDown";
 import ReactPhases from "./Contents/ReactPhases";
 import TableOfContents from "./Contents/TableOfContents";
 import UseEffectAndUseLayoutEffect from "./Contents/UseEffectAndUseLayoutEffect";
-
-const code = `
-function ExpensiveComponent() {
-  const renderCount = useRef(0);
-  useEffect(() => {
-    const t = setTimeout(() => console.log("expensive tree!"), 2000);
-    renderCount.current += 1;
-    return () => clearTimeout(t);
-  });
-  const totalRender = renderCount.current;
-  return <p>I am a very slow component, rendered {totalRender} times!.</p>;
-}
-`;
+import UseMemoAndUseCallback from "./Contents/UseMemoAndUseCallback";
 
 function App() {
   const [slideIndex, setSlideIndex] = useState({ h: 0, v: 0, f: 0 });
@@ -93,29 +81,7 @@ function App() {
           <MemoHOC slideIndex={slideIndex} slideOrder={5} />
           <CustomMemoHOC slideIndex={slideIndex} slideOrder={6} />
           <UseEffectAndUseLayoutEffect slideIndex={slideIndex} slideOrder={7} />
-          <section>
-            <section>
-              <h2 className="title">React Learning Coming Soon 1-1!</h2>
-            </section>
-            <section>
-              <h2 className="title">React Learning Coming Soon 1-2!</h2>
-            </section>
-          </section>
-          <section>
-            <section>
-              <h2 className="title">React Learning Coming Soon 2-1!</h2>
-            </section>
-            <section>
-              <h2 className="title">React Learning Coming Soon 2-2!</h2>
-            </section>
-          </section>
-          <section>
-            <pre className="prettyprint" style={{ fontSize: "0.35em" }}>
-              <code className="javascript" data-trim data-line-numbers="2,6">
-                {code}
-              </code>
-            </pre>
-          </section>
+          <UseMemoAndUseCallback slideIndex={slideIndex} slideOrder={8} />
         </div>
       </div>
     </div>
