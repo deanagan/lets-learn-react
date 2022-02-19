@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import CodeDemo from "../Common/CodeDemo";
 
 // import CodeDemo from "../Common/CodeDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
@@ -69,16 +70,15 @@ const structures = [
       "https://codesandbox.io/s/usememo-and-usecallback-qvehl?file=/src/App.js",
     gitlink:
       "https://github.com/deanagan/react-snippets/tree/main/usememo-color",
-    demo: {
-      lineNumbers: "",
-      description:
-        "ColorAppV1 is a component that has number increment, and color changing buttons and drop down form. Observe TopColors always re-rendering anytime the app's local state changes. ",
-      sandboxlink: "",
-      codes: [
-        {
-          uniqueId: uuidv4(),
-          lineNumbers: "",
-          src: dedentStrUsing1stLineIndent(`
+
+    lineNumbers: "",
+    description:
+      "ColorAppV1 is a component that has number increment, and color changing buttons and drop down form. Observe TopColors always re-rendering anytime the app's local state changes. ",
+    codes: [
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
         export default function ColorAppV1() {
           const [currentColor, setCurrentColor] = useState("blue");
           const [counter, setCounter] = useState(0);
@@ -129,14 +129,14 @@ const structures = [
           );
         }
         `),
-        },
-        {
-          uniqueId: uuidv4(),
-          lineNumbers: "34-37,40-44, 46",
-          description:
-            "Changing the color or incrementing the count will cause the top colors table to re-render which we don't want. This happens because the color app component changes\
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "34-37,40-44, 46",
+        description:
+          "Changing the color or incrementing the count will cause the top colors table to re-render which we don't want. This happens because the color app component changes\
       state, and re-renders, which re-creates favoriteColors. Since favoriteColors is a new object, thus top colors re-renders too.",
-          src: dedentStrUsing1stLineIndent(`
+        src: dedentStrUsing1stLineIndent(`
           export default function ColorAppV1() {
             const [currentColor, setCurrentColor] = useState("blue");
             const [counter, setCounter] = useState(0);
@@ -187,14 +187,14 @@ const structures = [
             );
           }
         `),
-        },
-        {
-          uniqueId: uuidv4(),
-          lineNumbers: "1-18",
-          description:
-            "Move constants and pure functions out of the component. This will fix the TopColors table from unnecessarily being rendered by increment or color change.",
-          sandboxlink: "",
-          src: dedentStrUsing1stLineIndent(`
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "1-18",
+        description:
+          "Move constants and pure functions out of the component. This will fix the TopColors table from unnecessarily being rendered by increment or color change.",
+        sandboxlink: "",
+        src: dedentStrUsing1stLineIndent(`
       const colors = [
         { name: "red", uniqueId: 1 },
         { name: "green", uniqueId: 2 },
@@ -245,15 +245,15 @@ const structures = [
         );
       }
       `),
-        },
-        {
-          uniqueId: uuidv4(),
-          lineNumbers: "27",
-          description:
-            "Further improvement, we should prevent the dropdown from re-rendering if increment happens. First step is to memoize colorChoices. If the increment happens, \
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "27",
+        description:
+          "Further improvement, we should prevent the dropdown from re-rendering if increment happens. First step is to memoize colorChoices. If the increment happens, \
       the ColorApp state changes and causes the colorChoices to be recreated as a new object, which causes the dropdown to re-render.",
-          sandboxlink: "",
-          src: dedentStrUsing1stLineIndent(`
+        sandboxlink: "",
+        src: dedentStrUsing1stLineIndent(`
     const colors = [
       { name: "red", uniqueId: 1 },
       { name: "green", uniqueId: 2 },
@@ -304,14 +304,14 @@ const structures = [
       );
     }
     `),
-        },
-        {
-          uniqueId: uuidv4(),
-          lineNumbers: "27-29",
-          description:
-            "Apply useMemo to colorChoices to prevent drop down from re-rendering when increment is clicked. Now it only re-calculates if currentColor changes.",
-          sandboxlink: "",
-          src: dedentStrUsing1stLineIndent(`
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "27-29",
+        description:
+          "Apply useMemo to colorChoices to prevent drop down from re-rendering when increment is clicked. Now it only re-calculates if currentColor changes.",
+        sandboxlink: "",
+        src: dedentStrUsing1stLineIndent(`
     const colors = [
       { name: "red", uniqueId: 1 },
       { name: "green", uniqueId: 2 },
@@ -364,14 +364,14 @@ const structures = [
       );
     }
     `),
-        },
-        {
-          uniqueId: uuidv4(),
-          lineNumbers: "25, 27-29",
-          description:
-            "Even though we've memoized, notice that the dropdown still re-renders, because setToOtherColor recalculates each time.",
-          sandboxlink: "",
-          src: dedentStrUsing1stLineIndent(`
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "25, 27-29",
+        description:
+          "Even though we've memoized, notice that the dropdown still re-renders, because setToOtherColor recalculates each time.",
+        sandboxlink: "",
+        src: dedentStrUsing1stLineIndent(`
     const colors = [
       { name: "red", uniqueId: 1 },
       { name: "green", uniqueId: 2 },
@@ -424,14 +424,14 @@ const structures = [
       );
     }
     `),
-        },
-        {
-          uniqueId: uuidv4(),
-          lineNumbers: "25,45",
-          description:
-            "Apply useCallback to setToOtherColor to prevent the setColor function from re-rendering the dropdown.",
-          sandboxlink: "",
-          src: dedentStrUsing1stLineIndent(`
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "25,45",
+        description:
+          "Apply useCallback to setToOtherColor to prevent the setColor function from re-rendering the dropdown.",
+        sandboxlink: "",
+        src: dedentStrUsing1stLineIndent(`
     const colors = [
       { name: "red", uniqueId: 1 },
       { name: "green", uniqueId: 2 },
@@ -484,9 +484,8 @@ const structures = [
       );
     }
     `),
-        },
-      ],
-    },
+      },
+    ],
 
     infinidemoLink:
       "https://codesandbox.io/s/usememo-and-usecallback-prevent-infinite-loop-kg7zo?file=/src/ColorDropdown.js",
@@ -799,12 +798,12 @@ export default function UseMemoAndUseCallback({ slideIndex, slideOrder }) {
         </ul>
       </section>
 
-      {/* <section>
-        <Header>Memoization</Header>
+      <section>
+        <Header>useMemo and useCallback</Header>
         <CodeDemo structures={structures}>
-          <ColorAndCountDemo choiceComponent={choiceComponent} />
+          <p>Demo App coming soon.</p>
         </CodeDemo>
-      </section> */}
+      </section>
     </section>
   );
 }
