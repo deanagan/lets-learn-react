@@ -1,8 +1,8 @@
 import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import CodeDemo from "../Common/CodeDemo";
 
+import CodeDemo from "../Common/CodeDemo";
 // import CodeDemo from "../Common/CodeDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
