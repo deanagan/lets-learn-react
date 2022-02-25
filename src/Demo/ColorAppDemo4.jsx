@@ -3,8 +3,8 @@ import "./styles.css";
 import { useCallback, useMemo, useState } from "react";
 
 import ColorDropDown from "./ColorDropdown";
+import PrimaryColors from "./PrimaryColors";
 import { Button, ColoredHeader } from "./StyledComponents";
-import TopColors from "./TopColors";
 
 const colors = [
   { name: "red", uniqueId: 1 },
@@ -51,7 +51,7 @@ export default function ColorAppV4() {
         setToColor={setToOtherColor}
       />
 
-      <TopColors colors={favoriteColors} />
+      <PrimaryColors colors={favoriteColors} />
     </div>
   );
 }

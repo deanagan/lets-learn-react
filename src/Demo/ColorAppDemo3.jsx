@@ -1,10 +1,8 @@
-import "./styles.css";
-
 import { useMemo, useState } from "react";
 
 import ColorDropDown from "./ColorDropdown";
+import PrimaryColors from "./PrimaryColors";
 import { Button, ColoredHeader } from "./StyledComponents";
-import TopColors from "./TopColors";
 
 const colors = [
   { name: "red", uniqueId: 1 },
@@ -15,9 +13,10 @@ const colors = [
   { name: "violet", uniqueId: 6 },
 ];
 
-const favoriteColors = ["red", "green", "blue"];
 const getColorType = (color) =>
   ["red", "blue", "green"].includes(color) ? "PRIMARY" : "NON PRIMARY";
+
+const favoriteColors = ["red", "green", "blue"];
 
 export default function ColorAppV3() {
   const [currentColor, setCurrentColor] = useState("blue");
@@ -33,25 +32,22 @@ export default function ColorAppV3() {
   }, [currentColor]);
 
   return (
-    <div className="App">
-      <ColoredHeader color={currentColor}>
-        I change color. Counter: {counter}
-      </ColoredHeader>
-      <h2>Change the color using the buttons or the drop down!</h2>
-
+    <div>
+      <ColoredHeader color={currentColor}>Counter: {counter}</ColoredHeader>
+      <h4>Change the color using the buttons or the drop down!</h4>
       <Button onClick={setToRed}>Red</Button>
       <Button onClick={setToGreen}>Green</Button>
       <Button onClick={setToBlue}>Blue</Button>
       <Button onClick={incrementCount}>Increment Counter</Button>
-      <div>Color Type: {getColorType(currentColor)}</div>
-
+      <div style={{ color: currentColor }}>
+        Color Type: {getColorType(currentColor)}
+      </div>
       <ColorDropDown
         colorChoices={colorChoices}
         currentColor={currentColor}
         setToColor={setToOtherColor}
       />
-
-      <TopColors colors={favoriteColors} />
+      <PrimaryColors colors={favoriteColors} />
     </div>
   );
 }
