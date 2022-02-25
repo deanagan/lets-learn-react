@@ -2,7 +2,7 @@ import "./styles.css";
 
 import { useCallback, useMemo, useState } from "react";
 
-import ColorDropDown from "./ColorDropdown";
+import ColorDropDown from "./ColorDropDown";
 import PrimaryColors from "./PrimaryColors";
 import { Button, ColoredHeader } from "./StyledComponents";
 
