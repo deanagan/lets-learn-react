@@ -7,11 +7,7 @@ import {
   DropDownLi,
 } from "./StyledComponents";
 
-export default function ColorDropDown({
-  colorChoices,
-  currentColor,
-  setToColor,
-}) {
+function ColorDropDown({ colorChoices, currentColor, setToColor }) {
   const [currentEntry, setCurrentEntry] = useState(currentColor);
   const [clickedOutside, setClickedOutside] = useState(true);
   const currentComponentRef = useRef(null);
@@ -63,3 +59,5 @@ export default function ColorDropDown({
     </DropDownLi>
   );
 }
+
+export default ColorDropDown;
