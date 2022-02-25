@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
+import ColorAppV1 from "../Demo/ColorAppDemo1";
+// import ColorAppV1 from "../Demo/ColorAppDemo1";
 // import CodeDemo from "../Common/CodeDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
@@ -55,7 +57,7 @@ const whatUseCallback = [
   {
     uniqueId: uuidv4(),
     value:
-      "Useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (or infinite loops)",
+      "Useful when passing callbacks to child components which rely on reference equality to prevent unnecessary renders (or infinite loops)",
   },
   {
     uniqueId: uuidv4(),
@@ -88,7 +90,8 @@ const structures = [
           const incrementCount = () => setCounter(counter + 1);
           const setToOtherColor = (color) => setCurrentColor(color);
 
-          const getColorType = (color) => (['red', 'blue', 'green']).includes(color) ? 'PRIMARY' : 'NON PRIMARY';
+          const getColorType = (color) =>
+            ["red", "blue", "green"].includes(color) ? "PRIMARY" : "NON PRIMARY";
 
           const colors = [
             { name: "red", uniqueId: 1 },
@@ -97,34 +100,28 @@ const structures = [
             { name: "orange", uniqueId: 4 },
             { name: "yellow", uniqueId: 5 },
             { name: "violet", uniqueId: 6 },
-            { name: "pink", uniqueId: 7 },
-            { name: "gray", uniqueId: 8 },
-            { name: "brown", uniqueId: 9 },
-            { name: "black", uniqueId: 10 },
-            { name: "white", uniqueId: 11 },
           ];
 
           const colorChoices = colors.filter((c) => c.name !== currentColor);
-          const favoriteColors = ['red', 'green', 'blue'];
+          const favoriteColors = ["red", "green", "blue"];
 
           return (
-            <div className="App">
-              <ColoredHeader color={currentColor}>I change color. Counter: {counter}</ColoredHeader>
-              <h2>Change the color using the buttons or the drop down!</h2>
-
+            <div>
+              <ColoredHeader color={currentColor}>
+                I change color. Counter: {counter}
+              </ColoredHeader>
+              <h4>Change the color using the buttons or the drop down!</h4>
               <Button onClick={setToRed}>Red</Button>
               <Button onClick={setToGreen}>Green</Button>
               <Button onClick={setToBlue}>Blue</Button>
               <Button onClick={incrementCount}>Increment Counter</Button>
               <div>Color Type: {getColorType(currentColor)}</div>
-
               <ColorDropDown
                 colorChoices={colorChoices}
                 currentColor={currentColor}
                 setToColor={setToOtherColor}
               />
-
-              <TopColors colors={favoriteColors}/>
+              <TopColors colors={favoriteColors} />
             </div>
           );
         }
@@ -155,11 +152,6 @@ const structures = [
               { name: "orange", uniqueId: 4 },
               { name: "yellow", uniqueId: 5 },
               { name: "violet", uniqueId: 6 },
-              { name: "pink", uniqueId: 7 },
-              { name: "gray", uniqueId: 8 },
-              { name: "brown", uniqueId: 9 },
-              { name: "black", uniqueId: 10 },
-              { name: "white", uniqueId: 11 },
             ];
 
             const colorChoices = colors.filter((c) => c.name !== currentColor);
@@ -202,11 +194,6 @@ const structures = [
         { name: "orange", uniqueId: 4 },
         { name: "yellow", uniqueId: 5 },
         { name: "violet", uniqueId: 6 },
-        { name: "pink", uniqueId: 7 },
-        { name: "gray", uniqueId: 8 },
-        { name: "brown", uniqueId: 9 },
-        { name: "black", uniqueId: 10 },
-        { name: "white", uniqueId: 11 },
       ];
 
       const favoriteColors = ['red', 'green', 'blue'];
@@ -261,11 +248,6 @@ const structures = [
       { name: "orange", uniqueId: 4 },
       { name: "yellow", uniqueId: 5 },
       { name: "violet", uniqueId: 6 },
-      { name: "pink", uniqueId: 7 },
-      { name: "gray", uniqueId: 8 },
-      { name: "brown", uniqueId: 9 },
-      { name: "black", uniqueId: 10 },
-      { name: "white", uniqueId: 11 },
     ];
 
     const favoriteColors = ['red', 'green', 'blue'];
@@ -319,11 +301,6 @@ const structures = [
       { name: "orange", uniqueId: 4 },
       { name: "yellow", uniqueId: 5 },
       { name: "violet", uniqueId: 6 },
-      { name: "pink", uniqueId: 7 },
-      { name: "gray", uniqueId: 8 },
-      { name: "brown", uniqueId: 9 },
-      { name: "black", uniqueId: 10 },
-      { name: "white", uniqueId: 11 },
     ];
 
     const favoriteColors = ['red', 'green', 'blue'];
@@ -379,11 +356,6 @@ const structures = [
       { name: "orange", uniqueId: 4 },
       { name: "yellow", uniqueId: 5 },
       { name: "violet", uniqueId: 6 },
-      { name: "pink", uniqueId: 7 },
-      { name: "gray", uniqueId: 8 },
-      { name: "brown", uniqueId: 9 },
-      { name: "black", uniqueId: 10 },
-      { name: "white", uniqueId: 11 },
     ];
 
     const favoriteColors = ['red', 'green', 'blue'];
@@ -439,11 +411,6 @@ const structures = [
       { name: "orange", uniqueId: 4 },
       { name: "yellow", uniqueId: 5 },
       { name: "violet", uniqueId: 6 },
-      { name: "pink", uniqueId: 7 },
-      { name: "gray", uniqueId: 8 },
-      { name: "brown", uniqueId: 9 },
-      { name: "black", uniqueId: 10 },
-      { name: "white", uniqueId: 11 },
     ];
 
     const favoriteColors = ['red', 'green', 'blue'];
@@ -757,19 +724,20 @@ const structures = [
 ];
 
 export default function UseMemoAndUseCallback({ slideIndex, slideOrder }) {
-  const [choiceComponent, setChoiceComponent] = useState("default");
+  // eslint-disable-next-line no-unused-vars
+  const [choiceComponent, setChoiceComponent] = useState(0);
 
   useLayoutEffect(() => {
-    setChoiceComponent("default");
-    if (slideIndex.h === slideOrder && slideIndex.v === 1) {
+    setChoiceComponent(0);
+    if (slideIndex.h === slideOrder && slideIndex.v === 2) {
       if (slideIndex.f === 3) {
-        setChoiceComponent("useMemoCompare");
+        setChoiceComponent(1);
       } else if (slideIndex.f === 4 || slideIndex.f === 5) {
-        setChoiceComponent("useDeepCompareEffect");
+        setChoiceComponent(2);
       } else if (slideIndex.f === 6) {
-        setChoiceComponent("useNoLayoutEffect");
+        setChoiceComponent(3);
       } else if (slideIndex.f === 7) {
-        setChoiceComponent("useLayoutEffect");
+        setChoiceComponent(4);
       }
     }
   }, [slideIndex.h, slideIndex.f, slideIndex.v, slideOrder]);
@@ -801,7 +769,7 @@ export default function UseMemoAndUseCallback({ slideIndex, slideOrder }) {
       <section>
         <Header>useMemo and useCallback</Header>
         <CodeDemo structures={structures}>
-          <p>Demo App coming soon.</p>
+          {choiceComponent === 0 ? <ColorAppV1 /> : null}
         </CodeDemo>
       </section>
     </section>

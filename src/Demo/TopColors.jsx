@@ -19,6 +19,7 @@ export const StyledTable = styled.table`
     text-align: left;
     padding: 16px;
     border: 1px solid black;
+    font-size: 0.5em;
   }
   tr:nth-child(even) {
     background-color: yellow;

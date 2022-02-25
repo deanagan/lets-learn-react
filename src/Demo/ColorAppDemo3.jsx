@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import ColorDropDown from "./ColorDropdown";
 import { Button, ColoredHeader } from "./StyledComponents";
@@ -19,7 +19,7 @@ const favoriteColors = ["red", "green", "blue"];
 const getColorType = (color) =>
   ["red", "blue", "green"].includes(color) ? "PRIMARY" : "NON PRIMARY";
 
-export default function ColorAppV2() {
+export default function ColorAppV3() {
   const [currentColor, setCurrentColor] = useState("blue");
   const [counter, setCounter] = useState(0);
   const setToGreen = () => setToOtherColor("green");
@@ -28,7 +28,9 @@ export default function ColorAppV2() {
   const incrementCount = () => setCounter(counter + 1);
   const setToOtherColor = (color) => setCurrentColor(color);
 
-  const colorChoices = colors.filter((c) => c.name !== currentColor);
+  const colorChoices = useMemo(() => {
+    return colors.filter((c) => c.name !== currentColor);
+  }, [currentColor]);
 
   return (
     <div className="App">

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Dropbtn = styled.div`
-  display: inline-block;
+  /* display: inline-block; */
   width: 80px;
   color: black;
   text-align: center;
@@ -38,6 +38,7 @@ export const DropDownItem = styled.a`
 export const DropDownLi = styled.li`
   display: inline-block;
   margin-bottom: 4px;
+  padding-top: -1px;
   &:hover {
     background-color: gray;
   }
