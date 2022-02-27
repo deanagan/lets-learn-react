@@ -1,6 +1,8 @@
 import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 
+import Comment from "./StyledComponents";
+
 export const TableRow = styled.tr``;
 export const TableHeader = styled.thead``;
 export const TableHeaderCell = styled.th``;
@@ -24,11 +26,6 @@ export const StyledTable = styled.table`
   tr:nth-child(even) {
     background-color: yellow;
   }
-`;
-
-const Comment = styled.p`
-  font-size: 1.5rem;
-  display: inline-block;
 `;
 
 const PrimaryColors = ({ colors }) => {

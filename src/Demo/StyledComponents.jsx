@@ -52,3 +52,8 @@ export const Button = styled.button`
 export const ColoredHeader = styled.h4`
   color: ${(props) => props.color};
 `;
+
+export const Comment = styled.p`
+  font-size: 1.5rem;
+  display: inline-block;
+`;
