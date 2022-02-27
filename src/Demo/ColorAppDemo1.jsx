@@ -12,10 +12,8 @@ export default function ColorAppV1() {
   const setToBlue = () => setToOtherColor("blue");
   const incrementCount = () => setCounter(counter + 1);
   const setToOtherColor = (color) => setCurrentColor(color);
-
   const getColorType = (color) =>
     ["red", "blue", "green"].includes(color) ? "PRIMARY" : "NON PRIMARY";
-
   const colors = [
     { name: "red", uniqueId: 1 },
     { name: "green", uniqueId: 2 },
@@ -24,10 +22,8 @@ export default function ColorAppV1() {
     { name: "yellow", uniqueId: 5 },
     { name: "violet", uniqueId: 6 },
   ];
-
   const colorChoices = colors.filter((c) => c.name !== currentColor);
   const favoriteColors = ["red", "green", "blue"];
-
   return (
     <div>
       <ColoredHeader color={currentColor}>Counter: {counter}</ColoredHeader>
