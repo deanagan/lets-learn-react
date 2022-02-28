@@ -69,6 +69,7 @@ const whatUseCallback = [
 // eslint-disable-next-line no-unused-vars
 const structures = [
   {
+    uniqueId: uuidv4(),
     sandboxlink:
       "https://codesandbox.io/s/usememo-and-usecallback-qvehl?file=/src/App.js",
     gitlink:
@@ -90,10 +91,8 @@ const structures = [
           const setToBlue = () => setToOtherColor("blue");
           const incrementCount = () => setCounter(counter + 1);
           const setToOtherColor = (color) => setCurrentColor(color);
-
           const getColorType = (color) =>
             ["red", "blue", "green"].includes(color) ? "PRIMARY" : "NON PRIMARY";
-
           const colors = [
             { name: "red", uniqueId: 1 },
             { name: "green", uniqueId: 2 },
@@ -102,10 +101,8 @@ const structures = [
             { name: "yellow", uniqueId: 5 },
             { name: "violet", uniqueId: 6 },
           ];
-
           const colorChoices = colors.filter((c) => c.name !== currentColor);
           const favoriteColors = ["red", "green", "blue"];
-
           return (
             <div>
               <ColoredHeader color={currentColor}>Counter: {counter}</ColoredHeader>
@@ -129,9 +126,9 @@ const structures = [
       },
       {
         uniqueId: uuidv4(),
-        lineNumbers: "",
+        lineNumbers: "1-16",
         description:
-          "Changing the color or incrementing the count will cause the top colors table to re-render which we don't want. This happens because the color app component changes\
+          "Changing the color or incrementing the count will cause the primary colors table to re-render which we don't want. This happens because the color app component changes\
       state, and re-renders, which re-creates favoriteColors. Since favoriteColors is a new object, thus top colors re-renders too.",
         src: dedentStrUsing1stLineIndent(`
         const colors = [
@@ -157,51 +154,16 @@ const structures = [
           const incrementCount = () => setCounter(counter + 1);
           const setToOtherColor = (color) => setCurrentColor(color);
 
-          const colorChoices = colors.filter((c) => c.name !== currentColor);
-
-          return (
-            <div>
-              <ColoredHeader color={currentColor}>Counter: {counter}</ColoredHeader>
-              <h4>Change the color using the buttons or the drop down!</h4>
-              <Button onClick={setToRed}>Red</Button>
-              <Button onClick={setToGreen}>Green</Button>
-              <Button onClick={setToBlue}>Blue</Button>
-              <Button onClick={incrementCount}>Increment Counter</Button>
-              <div style={{ color: currentColor }}>
-                Color Type: {getColorType(currentColor)}
-              </div>
-              <ColorDropDown
-                colorChoices={colorChoices}
-                currentColor={currentColor}
-                setToColor={setToOtherColor}
-              />
-              <PrimaryColors colors={favoriteColors} />
-            </div>
-          );
-        }
+          ...
         `),
       },
       {
         uniqueId: uuidv4(),
-        lineNumbers: "1-14",
+        lineNumbers: "",
         description:
           "Move constants and pure functions out of the component. This will fix the PrimaryColors table from unnecessarily being rendered by increment or color change.",
         sandboxlink: "",
         src: dedentStrUsing1stLineIndent(`
-        const colors = [
-          { name: "red", uniqueId: 1 },
-          { name: "green", uniqueId: 2 },
-          { name: "blue", uniqueId: 3 },
-          { name: "orange", uniqueId: 4 },
-          { name: "yellow", uniqueId: 5 },
-          { name: "violet", uniqueId: 6 },
-        ];
-
-        const getColorType = (color) =>
-          ["red", "blue", "green"].includes(color) ? "PRIMARY" : "NON PRIMARY";
-
-        const favoriteColors = ["red", "green", "blue"];
-
         export default function ColorAppV2() {
           const [currentColor, setCurrentColor] = useState("blue");
           const [counter, setCounter] = useState(0);
@@ -237,56 +199,43 @@ const structures = [
       },
       {
         uniqueId: uuidv4(),
-        lineNumbers: "27",
+        lineNumbers: "9-11",
         description:
           "Further improvement, we should prevent the dropdown from re-rendering if increment happens. First step is to memoize colorChoices. If the increment happens, \
       the ColorApp state changes and causes the colorChoices to be recreated as a new object, which causes the dropdown to re-render.",
         sandboxlink: "",
         src: dedentStrUsing1stLineIndent(`
-    const colors = [
-      { name: "red", uniqueId: 1 },
-      { name: "green", uniqueId: 2 },
-      { name: "blue", uniqueId: 3 },
-      { name: "orange", uniqueId: 4 },
-      { name: "yellow", uniqueId: 5 },
-      { name: "violet", uniqueId: 6 },
-    ];
-
-    const favoriteColors = ['red', 'green', 'blue'];
-    const getColorType = (color) => (['red', 'blue', 'green']).includes(color) ? 'PRIMARY' : 'NON PRIMARY';
-
-    export default function ColorAppV2() {
-      const [currentColor, setCurrentColor] = useState("blue");
-      const [counter, setCounter] = useState(0);
-      const setToGreen = () => setToOtherColor("green");
-      const setToRed = () => setToOtherColor("red");
-      const setToBlue = () => setToOtherColor("blue");
-      const incrementCount = () => setCounter(counter + 1);
-      const setToOtherColor = (color) => setCurrentColor(color);
-
-      const colorChoices = colors.filter((c) => c.name !== currentColor); // --> We need to memoize to not recalculate each time
-
-      return (
-        <div className="App">
-          <ColoredHeader color={currentColor}>I change color. Counter: {counter}</ColoredHeader>
-          <h2>Change the color using the buttons or the drop down!</h2>
-
-          <Button onClick={setToRed}>Red</Button>
-          <Button onClick={setToGreen}>Green</Button>
-          <Button onClick={setToBlue}>Blue</Button>
-          <Button onClick={incrementCount}>Increment Counter</Button>
-          <div>Color Type: {getColorType(currentColor)}</div>
-
-          <ColorDropDown
-            colorChoices={colorChoices}
-            currentColor={currentColor}
-            setToColor={setToOtherColor}
-          />
-
-          <PrimaryColors colors={favoriteColors}/>
-        </div>
-      );
-    }
+        export default function ColorAppV3() {
+          const [currentColor, setCurrentColor] = useState("blue");
+          const [counter, setCounter] = useState(0);
+          const setToGreen = () => setToOtherColor("green");
+          const setToRed = () => setToOtherColor("red");
+          const setToBlue = () => setToOtherColor("blue");
+          const incrementCount = () => setCounter(counter + 1);
+          const setToOtherColor = (color) => setCurrentColor(color);
+          const colorChoices = useMemo(() => {
+            return colors.filter((c) => c.name !== currentColor);
+          }, [currentColor]);
+          return (
+            <div>
+              <ColoredHeader color={currentColor}>Counter: {counter}</ColoredHeader>
+              <h4>Change the color using the buttons or the drop down!</h4>
+              <Button onClick={setToRed}>Red</Button>
+              <Button onClick={setToGreen}>Green</Button>
+              <Button onClick={setToBlue}>Blue</Button>
+              <Button onClick={incrementCount}>Increment Counter</Button>
+              <div style={{ color: currentColor }}>
+                Color Type: {getColorType(currentColor)}
+              </div>
+              <ColorDropDown
+                colorChoices={colorChoices}
+                currentColor={currentColor}
+                setToColor={setToOtherColor}
+              />
+              <PrimaryColors colors={favoriteColors} />
+            </div>
+          );
+        }
     `),
       },
       {

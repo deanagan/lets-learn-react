@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import {
+  Comment,
   Dropbtn,
   DropDownContent,
   DropDownItem,
@@ -11,6 +12,7 @@ function ColorDropDown({ colorChoices, currentColor, setToColor }) {
   const [currentEntry, setCurrentEntry] = useState(currentColor);
   const [clickedOutside, setClickedOutside] = useState(true);
   const currentComponentRef = useRef(null);
+  const [counter, setCounter] = useState(0);
 
   const handleClickOutside = (e) => {
     const current = currentComponentRef.current;
@@ -19,8 +21,8 @@ function ColorDropDown({ colorChoices, currentColor, setToColor }) {
     }
   };
 
-  useEffect(() => {
-    console.log("render drop down");
+  useLayoutEffect(() => {
+    setCounter((cv) => cv + 1);
   }, [colorChoices, currentColor, setToColor]);
 
   useEffect(() => {
@@ -39,24 +41,29 @@ function ColorDropDown({ colorChoices, currentColor, setToColor }) {
 
   const handleClickInside = () => setClickedOutside(false);
   return (
-    <DropDownLi>
-      <Dropbtn onClick={handleClickInside}>{currentEntry}</Dropbtn>
-      {!clickedOutside ? (
-        <DropDownContent ref={currentComponentRef}>
-          {colorChoices.map((pe) => (
-            <DropDownItem
-              key={pe.uniqueId.toString()}
-              onClick={() => {
-                onSelectHandler(pe);
-                setClickedOutside(true);
-              }}
-            >
-              {pe.name}
-            </DropDownItem>
-          ))}
-        </DropDownContent>
-      ) : null}
-    </DropDownLi>
+    <>
+      <Comment style={{ display: "block" }}>
+        Dropdown UseEffect RunCount: {counter}
+      </Comment>
+      <DropDownLi>
+        <Dropbtn onClick={handleClickInside}>{currentEntry}</Dropbtn>
+        {!clickedOutside ? (
+          <DropDownContent ref={currentComponentRef}>
+            {colorChoices.map((pe) => (
+              <DropDownItem
+                key={pe.uniqueId.toString()}
+                onClick={() => {
+                  onSelectHandler(pe);
+                  setClickedOutside(true);
+                }}
+              >
+                {pe.name}
+              </DropDownItem>
+            ))}
+          </DropDownContent>
+        ) : null}
+      </DropDownLi>
+    </>
   );
 }
 
