@@ -6,6 +6,7 @@ import CodeDemo from "../Common/CodeDemo";
 import ColorAppV1 from "../Demo/ColorAppDemo1";
 import ColorAppV2 from "../Demo/ColorAppDemo2";
 import ColorAppV3 from "../Demo/ColorAppDemo3";
+import ColorAppV4 from "../Demo/ColorAppDemo4";
 // import CodeDemo from "../Common/CodeDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
@@ -721,6 +722,7 @@ export default function UseMemoAndUseCallback({ slideIndex, slideOrder }) {
           ) : null}
           {choiceComponent === 1 ? <ColorAppV2 /> : null}
           {choiceComponent === 2 ? <ColorAppV3 /> : null}
+          {choiceComponent === 3 ? <ColorAppV4 /> : null}
         </CodeDemo>
       </section>
     </section>
