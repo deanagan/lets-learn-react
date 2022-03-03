@@ -1,5 +1,3 @@
-import "./styles.css";
-
 import { useCallback, useMemo, useState } from "react";
 
 import ColorDropDown from "./ColorDropDown";
@@ -15,9 +13,10 @@ const colors = [
   { name: "violet", uniqueId: 6 },
 ];
 
-const favoriteColors = ["red", "green", "blue"];
 const getColorType = (color) =>
   ["red", "blue", "green"].includes(color) ? "PRIMARY" : "NON PRIMARY";
+
+const favoriteColors = ["red", "green", "blue"];
 
 export default function ColorAppV4() {
   const [currentColor, setCurrentColor] = useState("blue");
