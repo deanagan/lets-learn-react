@@ -241,23 +241,11 @@ const structures = [
       },
       {
         uniqueId: uuidv4(),
-        lineNumbers: "27-29",
+        lineNumbers: "8",
         description:
           "Apply useMemo to colorChoices to prevent drop down from re-rendering when increment is clicked. Now it only re-calculates if currentColor changes.",
         sandboxlink: "",
         src: dedentStrUsing1stLineIndent(`
-    const colors = [
-      { name: "red", uniqueId: 1 },
-      { name: "green", uniqueId: 2 },
-      { name: "blue", uniqueId: 3 },
-      { name: "orange", uniqueId: 4 },
-      { name: "yellow", uniqueId: 5 },
-      { name: "violet", uniqueId: 6 },
-    ];
-
-    const favoriteColors = ['red', 'green', 'blue'];
-    const getColorType = (color) => (['red', 'blue', 'green']).includes(color) ? 'PRIMARY' : 'NON PRIMARY';
-
     export default function ColorAppV3() {
       const [currentColor, setCurrentColor] = useState("blue");
       const [counter, setCounter] = useState(0);
@@ -296,112 +284,44 @@ const structures = [
       },
       {
         uniqueId: uuidv4(),
-        lineNumbers: "25, 27-29",
-        description:
-          "Even though we've memoized, notice that the dropdown still re-renders, because setToOtherColor recalculates each time.",
-        sandboxlink: "",
-        src: dedentStrUsing1stLineIndent(`
-    const colors = [
-      { name: "red", uniqueId: 1 },
-      { name: "green", uniqueId: 2 },
-      { name: "blue", uniqueId: 3 },
-      { name: "orange", uniqueId: 4 },
-      { name: "yellow", uniqueId: 5 },
-      { name: "violet", uniqueId: 6 },
-    ];
-
-    const favoriteColors = ['red', 'green', 'blue'];
-    const getColorType = (color) => (['red', 'blue', 'green']).includes(color) ? 'PRIMARY' : 'NON PRIMARY';
-
-    export default function ColorAppV3() {
-      const [currentColor, setCurrentColor] = useState("blue");
-      const [counter, setCounter] = useState(0);
-      const setToGreen = () => setToOtherColor("green");
-      const setToRed = () => setToOtherColor("red");
-      const setToBlue = () => setToOtherColor("blue");
-      const incrementCount = () => setCounter(counter + 1);
-      const setToOtherColor = (color) => setCurrentColor(color); //-->> this causes a re-render as it is recalculated.
-
-      const colorChoices = useMemo(() => {
-        return colors.filter((c) => c.name !== currentColor);
-      }, [currentColor]);
-
-      return (
-        <div className="App">
-          <ColoredHeader color={currentColor}>I change color. Counter: {counter}</ColoredHeader>
-          <h2>Change the color using the buttons or the drop down!</h2>
-
-          <Button onClick={setToRed}>Red</Button>
-          <Button onClick={setToGreen}>Green</Button>
-          <Button onClick={setToBlue}>Blue</Button>
-          <Button onClick={incrementCount}>Increment Counter</Button>
-          <div>Color Type: {getColorType(currentColor)}</div>
-
-          <ColorDropDown
-            colorChoices={colorChoices}
-            currentColor={currentColor}
-            setToColor={setToOtherColor}
-          />
-
-          <PrimaryColors colors={favoriteColors}/>
-        </div>
-      );
-    }
-    `),
-      },
-      {
-        uniqueId: uuidv4(),
-        lineNumbers: "25,45",
+        lineNumbers: "8",
         description:
           "Apply useCallback to setToOtherColor to prevent the setColor function from re-rendering the dropdown.",
         sandboxlink: "",
         src: dedentStrUsing1stLineIndent(`
-    const colors = [
-      { name: "red", uniqueId: 1 },
-      { name: "green", uniqueId: 2 },
-      { name: "blue", uniqueId: 3 },
-      { name: "orange", uniqueId: 4 },
-      { name: "yellow", uniqueId: 5 },
-      { name: "violet", uniqueId: 6 },
-    ];
+        export default function ColorAppV4() {
+          const [currentColor, setCurrentColor] = useState("blue");
+          const [counter, setCounter] = useState(0);
+          const setToGreen = () => setToOtherColor("green");
+          const setToRed = () => setToOtherColor("red");
+          const setToBlue = () => setToOtherColor("blue");
+          const incrementCount = () => setCounter(counter + 1);
+          const setToOtherColor = useCallback((color) => setCurrentColor(color), []);
 
-    const favoriteColors = ['red', 'green', 'blue'];
-    const getColorType = (color) => (['red', 'blue', 'green']).includes(color) ? 'PRIMARY' : 'NON PRIMARY';
+          const colorChoices = useMemo(() => {
+            return colors.filter((c) => c.name !== currentColor);
+          }, [currentColor]);
 
-    export default function ColorAppV4() {
-      const [currentColor, setCurrentColor] = useState("blue");
-      const [counter, setCounter] = useState(0);
-      const setToGreen = () => setToOtherColor("green");
-      const setToRed = () => setToOtherColor("red");
-      const setToBlue = () => setToOtherColor("blue");
-      const incrementCount = () => setCounter(counter + 1);
-      const setToOtherColor = useCallback((color) => setCurrentColor(color), []);
-
-      const colorChoices = useMemo(() => {
-        return colors.filter((c) => c.name !== currentColor);
-      }, [currentColor]);
-
-      return (
-        <div className="App">
-          <ColoredHeader color={currentColor}>I change color. Counter: {counter}</ColoredHeader>
-          <h2>Change the color using the buttons or the drop down!</h2>
-
-          <Button onClick={setToRed}>Red</Button>
-          <Button onClick={setToGreen}>Green</Button>
-          <Button onClick={setToBlue}>Blue</Button>
-          <Button onClick={incrementCount}>Increment Counter</Button>
-          <div>Color Type: {getColorType(currentColor)}</div>
-
-          <ColorDropDown
-            colorChoices={colorChoices}
-            currentColor={currentColor}
-            setToColor={setToOtherColor}
-          />
-
-          <PrimaryColors colors={favoriteColors}/>
-        </div>
-      );
-    }
+          return (
+            <div>
+              <ColoredHeader color={currentColor}>Counter: {counter}</ColoredHeader>
+              <h4>Change the color using the buttons or the drop down!</h4>
+              <Button onClick={setToRed}>Red</Button>
+              <Button onClick={setToGreen}>Green</Button>
+              <Button onClick={setToBlue}>Blue</Button>
+              <Button onClick={incrementCount}>Increment Counter</Button>
+              <div style={{ color: currentColor }}>
+                Color Type: {getColorType(currentColor)}
+              </div>
+              <ColorDropDown
+                colorChoices={colorChoices}
+                currentColor={currentColor}
+                setToColor={setToOtherColor}
+              />
+              <PrimaryColors colors={favoriteColors} />
+            </div>
+          );
+        }
     `),
       },
     ],
@@ -677,15 +597,17 @@ const structures = [
 
 export default function UseMemoAndUseCallback({ slideIndex, slideOrder }) {
   // eslint-disable-next-line no-unused-vars
-  const [choiceComponent, setChoiceComponent] = useState(0);
+  const [choiceComponent, setChoiceComponent] = useState(1);
 
   useLayoutEffect(() => {
-    setChoiceComponent(0);
+    setChoiceComponent(1);
     if (slideIndex.h === slideOrder && slideIndex.v === 2) {
-      if (slideIndex.f === 0) {
-        setChoiceComponent(1);
-      } else if (slideIndex.f === 1 || slideIndex.f === 2) {
+      if (slideIndex.f === 0 || slideIndex.f === 1) {
         setChoiceComponent(2);
+      } else if (slideIndex.f === 2 || slideIndex.f === 3) {
+        setChoiceComponent(3);
+      } else if (slideIndex.f === 4) {
+        setChoiceComponent(4);
       }
     }
   }, [slideIndex.h, slideIndex.f, slideIndex.v, slideOrder]);
@@ -717,12 +639,12 @@ export default function UseMemoAndUseCallback({ slideIndex, slideOrder }) {
       <section>
         <Header>useMemo and useCallback</Header>
         <CodeDemo structures={structures}>
-          {choiceComponent === 0 ? (
+          {choiceComponent === 1 ? (
             <ColorAppV1 style={{ display: "none" }} />
           ) : null}
-          {choiceComponent === 1 ? <ColorAppV2 /> : null}
-          {choiceComponent === 2 ? <ColorAppV3 /> : null}
-          {choiceComponent === 3 ? <ColorAppV4 /> : null}
+          {choiceComponent === 2 ? <ColorAppV2 /> : null}
+          {choiceComponent === 3 ? <ColorAppV3 /> : null}
+          {choiceComponent === 4 ? <ColorAppV4 /> : null}
         </CodeDemo>
       </section>
     </section>

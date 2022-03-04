@@ -32,24 +32,21 @@ export default function ColorAppV4() {
   }, [currentColor]);
 
   return (
-    <div className="App">
-      <ColoredHeader color={currentColor}>
-        I change color. Counter: {counter}
-      </ColoredHeader>
-      <h2>Change the color using the buttons or the drop down!</h2>
-
+    <div>
+      <ColoredHeader color={currentColor}>Counter: {counter}</ColoredHeader>
+      <h4>Change the color using the buttons or the drop down!</h4>
       <Button onClick={setToRed}>Red</Button>
       <Button onClick={setToGreen}>Green</Button>
       <Button onClick={setToBlue}>Blue</Button>
       <Button onClick={incrementCount}>Increment Counter</Button>
-      <div>Color Type: {getColorType(currentColor)}</div>
-
+      <div style={{ color: currentColor }}>
+        Color Type: {getColorType(currentColor)}
+      </div>
       <ColorDropDown
         colorChoices={colorChoices}
         currentColor={currentColor}
         setToColor={setToOtherColor}
       />
-
       <PrimaryColors colors={favoriteColors} />
     </div>
   );
