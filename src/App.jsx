@@ -12,6 +12,7 @@ import MemoHOC from "./Contents/MemoHOC";
 import CustomMemoHOC from "./Contents/MemoHOCCustomCompare";
 import MoveStateDown from "./Contents/MoveStateDown";
 import ReactPhases from "./Contents/ReactPhases";
+import References from "./Contents/References";
 import TableOfContents from "./Contents/TableOfContents";
 import UseEffectAndUseLayoutEffect from "./Contents/UseEffectAndUseLayoutEffect";
 import UseMemoAndUseCallback from "./Contents/UseMemoAndUseCallback";
@@ -82,6 +83,7 @@ function App() {
           <CustomMemoHOC slideIndex={slideIndex} slideOrder={6} />
           <UseEffectAndUseLayoutEffect slideIndex={slideIndex} slideOrder={7} />
           <UseMemoAndUseCallback slideIndex={slideIndex} slideOrder={8} />
+          <References />
         </div>
       </div>
     </div>

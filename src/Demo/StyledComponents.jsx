@@ -57,3 +57,35 @@ export const Comment = styled.p`
   font-size: 1.5rem;
   display: inline-block;
 `;
+
+export const StyledOrderedList = styled.ol`
+  li {
+    font-size: 0.8em;
+  }
+`;
+
+export const StyledUnorderedList = styled.ul`
+  li {
+    font-size: 0.8em;
+  }
+`;
+
+export const FragmentedList = ({ items }) => (
+  <StyledOrderedList>
+    {items.map((content) => (
+      <li className="fragment" key={content.id}>
+        {content.value}
+      </li>
+    ))}
+  </StyledOrderedList>
+);
+
+export const FragmentedUrlList = ({ items }) => (
+  <StyledUnorderedList>
+    {items.map((content) => (
+      <li className="fragment" key={content.id}>
+        <a href={content.link}>{content.text}</a>
+      </li>
+    ))}
+  </StyledUnorderedList>
+);
