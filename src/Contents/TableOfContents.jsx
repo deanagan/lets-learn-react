@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 
 const StyledOrderedList = styled.ol`
   li {
@@ -17,16 +18,33 @@ const FragmentedList = ({ items }) => (
 );
 
 const contents = [
-  { id: 1, value: "React's phases to updating the DOM" },
-  { id: 2, value: "Code structure - first approach to improve performance" },
-  { id: 3, value: "React.memo - when we want to avoid component update" },
-  { id: 4, value: "useMemo and useCallback - optimisation tools" },
+  { id: uuidv4(), value: "React's phases to updating the DOM" },
   {
-    id: 5,
+    id: uuidv4(),
+    value: "Code structure - first approach to improve performance",
+  },
+  {
+    id: uuidv4(),
+    value: "React.memo - when we want to avoid component update",
+  },
+  { id: uuidv4(), value: "useMemo and useCallback - optimisation tools" },
+  {
+    id: uuidv4(),
     value: "useEffect and useLayoutEffect - asynchronous and synchronous",
   },
-  { id: 6, value: "useState and useReducer - keeping track of states" },
-  { id: 7, value: "References" },
+  {
+    id: uuidv4(),
+    value: "useState and useReducer - keeping track of states [Coming Soon]",
+  },
+  {
+    id: uuidv4(),
+    value: "useState and useReducer - keeping track of states [Coming Soon]",
+  },
+  {
+    id: uuidv4(),
+    value: "useDispatch and useSelector - redux hooks [Coming Soon]",
+  },
+  { id: uuidv4(), value: "References" },
 ];
 
 export default function TableOfContents() {
