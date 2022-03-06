@@ -11,7 +11,7 @@ const Comment = styled.p`
 `;
 
 const BorderedApp = styled.div`
-  border-style: solid;
+  border-style: none;
   margin-right: 20px;
 `;
 
