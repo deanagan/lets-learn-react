@@ -34,7 +34,7 @@ const contents = [
   },
   {
     id: uuidv4(),
-    value: "useState and useReducer - keeping track of states [Coming Soon]",
+    value: "Using a custom hook for tracking re-renders",
   },
   {
     id: uuidv4(),
