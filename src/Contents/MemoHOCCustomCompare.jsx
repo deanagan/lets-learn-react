@@ -15,7 +15,7 @@ const customMemo = [
         uniqueId: uuidv4(),
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
-        export default function CustomMemoApp({ usesCustomMemo = false }) {
+        export default function CustomMemoApp() {
           const [ball, setBall] = useState({ color: "blue", weight: 0 });
           const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
           const incrementWeight = () =>
@@ -59,7 +59,7 @@ const customMemo = [
         uniqueId: uuidv4(),
         lineNumbers: "16,37",
         src: dedentStrUsing1stLineIndent(`
-        export default function CustomMemoApp({ usesCustomMemo = false }) {
+        export default function CustomMemoApp() {
           const [ball, setBall] = useState({ color: "blue", weight: 0 });
           const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
           const incrementWeight = () =>
@@ -103,7 +103,7 @@ const customMemo = [
         uniqueId: uuidv4(),
         lineNumbers: "16,37-38",
         src: dedentStrUsing1stLineIndent(`
-        export default function CustomMemoApp({ usesCustomMemo = false }) {
+        export default function CustomMemoApp() {
           const [ball, setBall] = useState({ color: "blue", weight: 0 });
           const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
           const incrementWeight = () =>
@@ -148,7 +148,7 @@ const customMemo = [
         uniqueId: uuidv4(),
         lineNumbers: "16,36-39",
         src: dedentStrUsing1stLineIndent(`
-        export default function CustomMemoApp({ usesCustomMemo = false }) {
+        export default function CustomMemoApp() {
           const [ball, setBall] = useState({ color: "blue", weight: 0 });
           const setBallToColor = (color) => setBall((pb) => ({ ...pb, color }));
           const incrementWeight = () =>
