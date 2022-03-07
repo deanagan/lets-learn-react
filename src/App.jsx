@@ -16,6 +16,7 @@ import References from "./Contents/References";
 import TableOfContents from "./Contents/TableOfContents";
 import UseEffectAndUseLayoutEffect from "./Contents/UseEffectAndUseLayoutEffect";
 import UseMemoAndUseCallback from "./Contents/UseMemoAndUseCallback";
+import WhyDidYouUpdate from "./Contents/WhyDidYouUpdate";
 
 function App() {
   const [slideIndex, setSlideIndex] = useState({ h: 0, v: 0, f: 0 });
@@ -66,12 +67,12 @@ function App() {
       <div className="reveal deck">
         <div className="slides">
           <section>
-            <h2 className="title">Operative React</h2>
+            <h2 className="title">Operative React Hooks</h2>
             <div>
               adjective: <em>/ˈɒp(ə)rətɪv/</em> -{" "}
               <em>
                 functioning or having effect. <br />
-                <p>Example: the code is operative!</p>
+                <p>An interactive approach to understanding react hooks</p>
               </em>
             </div>
           </section>
@@ -83,6 +84,7 @@ function App() {
           <CustomMemoHOC slideIndex={slideIndex} slideOrder={6} />
           <UseEffectAndUseLayoutEffect slideIndex={slideIndex} slideOrder={7} />
           <UseMemoAndUseCallback slideIndex={slideIndex} slideOrder={8} />
+          <WhyDidYouUpdate slideIndex={slideIndex} slideOrder={9} />
           <References />
         </div>
       </div>
