@@ -16,6 +16,7 @@ import References from "./Contents/References";
 import TableOfContents from "./Contents/TableOfContents";
 import UseEffectAndUseLayoutEffect from "./Contents/UseEffectAndUseLayoutEffect";
 import UseMemoAndUseCallback from "./Contents/UseMemoAndUseCallback";
+import UseStateAndUseReducer from "./Contents/UseStateAndUseReducer";
 import WhyDidYouUpdate from "./Contents/WhyDidYouUpdate";
 
 function App() {
@@ -80,11 +81,12 @@ function App() {
           <ReactPhases />
           <MoveStateDown slideIndex={slideIndex} slideOrder={3} />
           <LiftContentUp slideIndex={slideIndex} slideOrder={4} />
-          <MemoHOC slideIndex={slideIndex} slideOrder={5} />
-          <CustomMemoHOC slideIndex={slideIndex} slideOrder={6} />
-          <UseEffectAndUseLayoutEffect slideIndex={slideIndex} slideOrder={7} />
-          <UseMemoAndUseCallback slideIndex={slideIndex} slideOrder={8} />
-          <WhyDidYouUpdate slideIndex={slideIndex} slideOrder={9} />
+          <UseStateAndUseReducer slideIndex={slideIndex} slideOrder={5} />
+          <MemoHOC slideIndex={slideIndex} slideOrder={6} />
+          <CustomMemoHOC slideIndex={slideIndex} slideOrder={7} />
+          <UseEffectAndUseLayoutEffect slideIndex={slideIndex} slideOrder={8} />
+          <UseMemoAndUseCallback slideIndex={slideIndex} slideOrder={9} />
+          <WhyDidYouUpdate slideIndex={slideIndex} slideOrder={10} />
           <References />
         </div>
       </div>

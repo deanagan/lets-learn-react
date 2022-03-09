@@ -2,10 +2,7 @@ import { isEqual } from "lodash";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
-const Button = styled.button`
-  margin: 5px;
-  color: ${(props) => props.buttonColor};
-`;
+import { Button } from "./StyledComponents";
 
 const Controls = styled.div`
   position: relative;

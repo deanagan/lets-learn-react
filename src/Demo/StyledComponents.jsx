@@ -49,8 +49,10 @@ export const Button = styled.button`
   color: ${(props) => props.color};
 `;
 
-export const ColoredHeader = styled.h4`
+export const ColoredHeader = styled.header`
   color: ${(props) => props.color};
+  display: block;
+  font-size: 1.5rem;
 `;
 
 export const Comment = styled.p`
@@ -68,6 +70,10 @@ export const StyledUnorderedList = styled.ul`
   li {
     font-size: 0.8em;
   }
+`;
+
+export const BlockInput = styled.input`
+  display: block;
 `;
 
 export const FragmentedList = ({ items }) => (
