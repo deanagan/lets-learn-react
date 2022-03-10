@@ -4,6 +4,10 @@ import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
 import TwoWayBindingDemo from "../Demo/TwoWayBindingDemo";
+import {
+  UseStateDispatchFunction,
+  UseStateNoDispatchFunction,
+} from "../Demo/UseStateDispatchFunction.jsx";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
 const Header = styled.h3`
@@ -36,8 +40,7 @@ const whatUseStateAndUseReducer = [
   },
 ];
 
-// eslint-disable-next-line no-unused-vars
-const structures = [
+const twowaybinding = [
   {
     uniqueId: uuidv4(),
     sandboxlink:
@@ -69,23 +72,68 @@ const structures = [
           );
         }`),
       },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+        export default function UseStateNoDispatchFunction() {
+          const [count, setCount] = useState(0);
+          const [buttonClickCount, setButtonClickCount] = useState(0);
+
+          const increment = () => {
+            setButtonClickCount(buttonClickCount + 1);
+            setTimeout(() => setCount(count + 1), 2000);
+          };
+
+          return (
+            <div>
+              <ColoredHeader>Click Count: {buttonClickCount}</ColoredHeader>
+              <Button onClick={increment}>Increment</Button>
+              <ColoredHeader>{count}</ColoredHeader>
+            </div>
+          );
+        }
+        `),
+      },
+      {
+        uniqueId: uuidv4(),
+        lineNumbers: "",
+        src: dedentStrUsing1stLineIndent(`
+        export default function UseStateDispatchFunction() {
+          const [count, setCount] = useState(0);
+          const [buttonClickCount, setButtonClickCount] = useState(0);
+
+          const increment = () => {
+            setButtonClickCount(buttonClickCount + 1);
+            setTimeout(() => setCount((cc) => cc + 1), 2000);
+          };
+
+          return (
+            <div>
+              <ColoredHeader>Click Count: {buttonClickCount}</ColoredHeader>
+              <Button onClick={increment}>Increment</Button>
+              <ColoredHeader>{count}</ColoredHeader>
+            </div>
+          );
+        }
+        `),
+      },
     ],
   },
 ];
 
 export default function UseStateAndUseReducer({ slideIndex, slideOrder }) {
-  // eslint-disable-next-line no-unused-vars
-  const [choiceComponent, setChoiceComponent] = useState(1);
+  const [choiceComponent, setChoiceComponent] = useState(0);
 
   useLayoutEffect(() => {
     setChoiceComponent(1);
-    if (slideIndex.h === slideOrder && slideIndex.v === 2) {
-      if (slideIndex.f === 0 || slideIndex.f === 1) {
+    if (slideIndex.h === slideOrder && slideIndex.v === 1) {
+      if (slideIndex.f === 1) {
         setChoiceComponent(2);
-      } else if (slideIndex.f === 2 || slideIndex.f === 3) {
-        setChoiceComponent(3);
-      } else if (slideIndex.f === 4) {
-        setChoiceComponent(4);
+      } else if (slideIndex.f === 0) {
+        setChoiceComponent(1);
+      } else {
+        setChoiceComponent(0);
       }
     }
   }, [slideIndex.h, slideIndex.f, slideIndex.v, slideOrder]);
@@ -104,9 +152,15 @@ export default function UseStateAndUseReducer({ slideIndex, slideOrder }) {
       </section>
 
       <section>
-        <Header>Two Way Binding</Header>
-        <CodeDemo structures={structures}>
-          <TwoWayBindingDemo />
+        <Header>useState</Header>
+        <CodeDemo structures={twowaybinding}>
+          {choiceComponent === 0 ? (
+            <TwoWayBindingDemo />
+          ) : choiceComponent === 1 ? (
+            <UseStateNoDispatchFunction />
+          ) : (
+            <UseStateDispatchFunction />
+          )}
         </CodeDemo>
       </section>
     </section>
