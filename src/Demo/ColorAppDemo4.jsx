@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
 
+import { Button, ColoredHeader } from "../Styles/StyledComponents";
 import ColorDropDown from "./ColorDropDown";
 import PrimaryColors from "./PrimaryColors";
-import { Button, ColoredHeader } from "./StyledComponents";
 
 const colors = [
   { name: "red", uniqueId: 1 },

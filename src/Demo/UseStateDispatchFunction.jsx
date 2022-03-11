@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, ColoredHeader } from "./StyledComponents";
+import { Button, ColoredHeader } from "../Styles/StyledComponents";
 
 export function UseStateNoDispatchFunction() {
   const [count, setCount] = useState(0);

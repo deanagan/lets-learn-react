@@ -2,7 +2,7 @@ import { isEqual } from "lodash";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
-import { Button } from "./StyledComponents";
+import { Button } from "../Styles/StyledComponents";
 
 const Controls = styled.div`
   position: relative;

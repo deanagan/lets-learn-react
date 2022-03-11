@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 
-import { Comment } from "./StyledComponents";
+import { Comment } from "../Styles/StyledComponents";
 
 export const TableRow = styled.tr``;
 export const TableHeader = styled.thead``;

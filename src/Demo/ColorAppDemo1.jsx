@@ -1,8 +1,8 @@
 import { useState } from "react";
 
+import { Button, ColoredHeader } from "../Styles/StyledComponents";
 import ColorDropDown from "./ColorDropDown";
 import PrimaryColors from "./PrimaryColors";
-import { Button, ColoredHeader } from "./StyledComponents";
 
 export default function ColorAppV1() {
   const [currentColor, setCurrentColor] = useState("blue");

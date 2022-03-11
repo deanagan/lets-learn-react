@@ -6,7 +6,7 @@ import {
   DropDownContent,
   DropDownItem,
   DropDownLi,
-} from "./StyledComponents";
+} from "../Styles/StyledComponents";
 
 function ColorDropDown({ colorChoices, currentColor, setToColor }) {
   const [currentEntry, setCurrentEntry] = useState(currentColor);

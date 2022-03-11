@@ -95,3 +95,25 @@ export const FragmentedUrlList = ({ items }) => (
     ))}
   </StyledUnorderedList>
 );
+
+export const StyledParagraph = styled.p`
+  font-size: 0.5em;
+`;
+
+export const StyledPre = styled.pre`
+  code {
+    font-size: 0.65em;
+    line-height: 1.3;
+  }
+  height: 760px;
+`;
+
+export const FlexContainer = styled.div`
+  display: flex;
+  height: 100%;
+`;
+
+export const CodeFlexItem = styled.div`
+  width: 70%;
+  height: 100%;
+`;

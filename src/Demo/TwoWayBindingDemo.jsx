@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { BlockInput, ColoredHeader } from "./StyledComponents";
+import { BlockInput, ColoredHeader } from "../Styles/StyledComponents";
 
 export default function TwoWayBindingDemo() {
   const [currentColor, setCurrentColor] = useState("blue");

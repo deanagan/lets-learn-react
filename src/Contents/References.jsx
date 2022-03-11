@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { FragmentedUrlList } from "../Demo/StyledComponents";
+import { FragmentedUrlList } from "../Styles/StyledComponents";
 
 const references = [
   {

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+import { Button, ColoredHeader } from "../Styles/StyledComponents";
 import ColorDropDown from "./ColorDropDown";
 import PrimaryColors from "./PrimaryColors";
-import { Button, ColoredHeader } from "./StyledComponents";
 
 function useWhyDidYouUpdate(name, props) {
   // Get a mutable ref object where we can store props ...
