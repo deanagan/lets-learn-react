@@ -38,11 +38,7 @@ const contents = [
   },
   {
     id: uuidv4(),
-    value: "useState and useReducer - keeping track of states [Coming Soon]",
-  },
-  {
-    id: uuidv4(),
-    value: "useDispatch and useSelector - redux hooks [Coming Soon]",
+    value: "useState - keeping track of states",
   },
   { id: uuidv4(), value: "References" },
 ];

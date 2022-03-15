@@ -5,8 +5,6 @@ import ColorDropDown from "./ColorDropDown";
 import PrimaryColors from "./PrimaryColors";
 
 function useWhyDidYouUpdate(name, props) {
-  // Get a mutable ref object where we can store props ...
-  // ... for comparison next time this hook runs.
   const previousProps = useRef();
   const updateCount = useRef(0);
   useEffect(() => {
@@ -26,11 +24,11 @@ function useWhyDidYouUpdate(name, props) {
           };
         }
       });
-      // If changesObj not empty then output to console
+      // If changesObj is not empty then output to console
       if (Object.keys(changesObj).length) {
         console.log("[why-did-it-update]", name, changesObj);
         updateCount.current += 1;
-        console.log(`Update Count: ${updateCount.current}`);
+        console.log("Update Count: ", updateCount.current);
       }
     }
     // Finally update previousProps with current props for next hook call
