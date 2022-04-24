@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Dropbtn = styled.div`
   /* display: inline-block; */
-  width: 80px;
+  width: 100px;
   color: black;
   text-align: center;
   padding: 10px 16px;
@@ -116,4 +116,42 @@ export const FlexContainer = styled.div`
 export const CodeFlexItem = styled.div`
   width: 70%;
   height: 100%;
+`;
+
+export const AccordionButton = styled.button`
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+
+  &.active {
+    &:hover {
+      background-color: #ccc;
+    }
+    &:after {
+      content: "\\2212";
+    }
+  }
+
+  &:after {
+    content: "\\02795";
+    float: right;
+    color: #777;
+    font-weight: bold;
+    margin-left: 5px;
+  }
+`;
+
+export const AccordionPanel = styled.div`
+  padding: 0 18px;
+  background-color: white;
+  display: ${(props) => props.display};
+  overflow: hidden;
+  max-height: ${(props) => `${props.maxHeight}px`};
+  transition: max-height 0.2s ease-out;
 `;

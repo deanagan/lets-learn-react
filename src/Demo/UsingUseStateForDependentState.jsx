@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useReducer } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { ColoredHeader } from "../Styles/StyledComponents";
@@ -27,75 +27,28 @@ const colorMapping = [
   { name: ADDITIVE_COLOR_TYPE, values: rgbColors, uniqueId: uuidv4() },
 ];
 
-const SET_COLOR_TYPE = "SET_COLOR_TYPE";
-const GET_AVAILABLE_COLORS = "GET_AVAILABLE_COLORS";
-const SET_COLOR = "SET_COLOR";
-
-function colorReducer(state, action) {
-  const { type } = action;
-
-  switch (type) {
-    case SET_COLOR_TYPE: {
-      const mappedColors = colorMapping.find(
-        (cm) => cm.name === action.colorType
-      );
-      const newAvailableColors = mappedColors.values;
-
-      return {
-        currentColor: newAvailableColors[0].name,
-        colorType: action.colorType,
-        availableColors: newAvailableColors,
-      };
-    }
-
-    case SET_COLOR: {
-      return { ...state, currentColor: action.color };
-    }
-
-    case GET_AVAILABLE_COLORS: {
-      return state;
-    }
-  }
-}
-
-function useColor(initialColorType) {
+export default function UsingUseStateForDependentState() {
+  const initialColorType = ADDITIVE_COLOR_TYPE;
   const colorMapped = colorMapping.find((cm) => cm.name === initialColorType);
-  const [state, dispatch] = useReducer(colorReducer, {
+  const [colors, setColors] = useState({
     currentColor: colorMapped.values[0].name,
     colorType: initialColorType,
     availableColors: colorMapped.values,
   });
 
-  const setColorType = useCallback(
-    (colorType) => dispatch({ type: SET_COLOR_TYPE, colorType }),
-    []
-  );
+  const onHandleColorTypeSelection = useCallback((colorType) => {
+    const colors = colorMapping.find((cm) => cm.name === colorType);
 
-  const setColor = useCallback(
-    (color) => dispatch({ type: SET_COLOR, color }),
-    []
-  );
-
-  return [
-    state,
-    {
-      setColor,
-      setColorType,
-    },
-  ];
-}
-
-export default function UsingUseReducer() {
-  const [colors, { setColor, setColorType }] = useColor(ADDITIVE_COLOR_TYPE);
-
-  const onHandleColorTypeSelection = useCallback(
-    (colorType) => setColorType(colorType),
-    [setColorType]
-  );
+    setColors({
+      colorType: colorType,
+      availableColors: colors.values,
+      currentColor: colors.values[0].name,
+    });
+  }, []);
 
   const onHandleColorSelection = useCallback(
-    (color) => setColor(color),
-    [setColor]
+    (color) => setColors((c) => ({ ...c, currentColor: color })),
+    []
   );
 
   const colorTypeChoices = useMemo(
@@ -106,7 +59,7 @@ export default function UsingUseReducer() {
   return (
     <div>
       <ColoredHeader color={colors.currentColor}>
-        This header changes color (useReducer)
+        This header changes color (useState)
       </ColoredHeader>
       <DropDown
         id="color-type"
@@ -119,7 +72,7 @@ export default function UsingUseReducer() {
         id="colors"
         dropDownLabelId="colors"
         choices={colors.availableColors}
-        currentValue={colors.availableColors[0].name}
+        currentValue={colors.currentColor}
         setValues={onHandleColorSelection}
       />
     </div>

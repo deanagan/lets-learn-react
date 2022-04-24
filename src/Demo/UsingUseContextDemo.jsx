@@ -2,6 +2,7 @@ import { useCallback, useMemo, useReducer } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { ColoredHeader } from "../Styles/StyledComponents";
+import Accordion from "./Accordion";
 import DropDown from "./DropDown";
 
 // Additive devices that are light emitting use RGB. Such as Computers, Television, Mobile Phone
@@ -85,7 +86,7 @@ function useColor(initialColorType) {
   ];
 }
 
-export default function UsingUseReducer() {
+export default function UsingUseContextDemo() {
   const [colors, { setColor, setColorType }] = useColor(ADDITIVE_COLOR_TYPE);
 
   const onHandleColorTypeSelection = useCallback(
@@ -122,6 +123,7 @@ export default function UsingUseReducer() {
         currentValue={colors.availableColors[0].name}
         setValues={onHandleColorSelection}
       />
+      <Accordion />
     </div>
   );
 }
