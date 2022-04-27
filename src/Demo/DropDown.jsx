@@ -25,8 +25,8 @@ function DropDown({ choices, currentValue, setValues, dropDownLabelId }) {
   }, [currentValue]);
 
   const onSelectHandler = (entry) => {
-    setCurrentEntry(entry.name);
-    setValues(entry.name);
+    setCurrentEntry(entry);
+    setValues(entry);
   };
 
   useEffect(() => {
