@@ -1,3 +1,3 @@
-# operative-react-slide
+# React Learning Playground
 
-This project is a slide-blog about react hooks.
+This project is a hybrid slide and code sandbox for learning react.
