@@ -69,13 +69,12 @@ function App() {
       <div className="reveal deck">
         <div className="slides">
           <section>
-            <h2 className="title">Operative React Hooks</h2>
+            <h2 className="title">React Learning Playground</h2>
             <div>
-              adjective: <em>/ˈɒp(ə)rətɪv/</em> -{" "}
-              <em>
-                functioning or having effect. <br />
-                <p>An interactive approach to understanding react hooks</p>
-              </em>
+              <p>
+                This project is a hybrid slide and code sandbox for learning
+                react.
+              </p>
             </div>
           </section>
           <TableOfContents />
