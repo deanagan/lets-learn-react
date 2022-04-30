@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 import CodeDemo from "../Common/CodeDemo";
-import UsingUseContextPropDrillDemo from "../Demo/UsingUseContextPropDrillDemo";
+import UsingUseContextDemo from "../Demo/UsingUseContextDemo";
 import { dedentStrUsing1stLineIndent } from "../Utils/util";
 
 const Header = styled.h3`
@@ -63,9 +63,9 @@ export default function UseContext({ slideIndex, slideOrder }) {
       </section>
 
       <section>
-        <Header>useState and useReducer</Header>
+        <Header>useContext Demo</Header>
         <CodeDemo structures={useContextCodes}>
-          <UsingUseContextPropDrillDemo />
+          <UsingUseContextDemo />
         </CodeDemo>
       </section>
     </section>

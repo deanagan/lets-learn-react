@@ -28,51 +28,54 @@ const colorMapping = [
 ];
 
 export default function UsingUseStateForDependentState() {
-  const initialColorType = ADDITIVE_COLOR_TYPE;
-  const colorMapped = colorMapping.find((cm) => cm.name === initialColorType);
-  const [colors, setColors] = useState({
-    currentColor: colorMapped.values[0].name,
-    colorType: initialColorType,
-    availableColors: colorMapped.values,
+  const [colorSetting, setColorSetting] = useState(() => {
+    const initialColorSetting = colorMapping.find(
+      (cm) => cm.name === ADDITIVE_COLOR_TYPE
+    );
+    return {
+      currentColor: initialColorSetting.values[0],
+      colorType: initialColorSetting,
+      colors: initialColorSetting.values,
+    };
   });
 
   const onHandleColorTypeSelection = useCallback((colorType) => {
-    const colors = colorMapping.find((cm) => cm.name === colorType);
+    const colorSetting = colorMapping.find((cm) => cm.name === colorType.name);
 
-    setColors({
+    setColorSetting({
+      currentColor: colorSetting.values[0],
       colorType: colorType,
-      availableColors: colors.values,
-      currentColor: colors.values[0].name,
+      colors: colorSetting.values,
     });
   }, []);
 
   const onHandleColorSelection = useCallback(
-    (color) => setColors((c) => ({ ...c, currentColor: color })),
+    (color) => setColorSetting((c) => ({ ...c, currentColor: color })),
     []
   );
 
   const colorTypeChoices = useMemo(
-    () => colorMapping.filter((cm) => cm.name !== colors.colorType),
-    [colors.colorType]
+    () => colorMapping.filter((cm) => cm.name !== colorSetting.colorType.name),
+    [colorSetting.colorType]
   );
 
   return (
     <div>
-      <ColoredHeader color={colors.currentColor}>
+      <ColoredHeader color={colorSetting.currentColor.name}>
         This header changes color (useState)
       </ColoredHeader>
       <DropDown
         id="color-type"
         dropDownLabelId="color-type"
         choices={colorTypeChoices}
-        currentValue={colors.colorType}
+        currentValue={colorSetting.colorType}
         setValues={onHandleColorTypeSelection}
       />
       <DropDown
         id="colors"
         dropDownLabelId="colors"
-        choices={colors.availableColors}
-        currentValue={colors.currentColor}
+        choices={colorSetting.colors}
+        currentValue={colorSetting.currentColor}
         setValues={onHandleColorSelection}
       />
     </div>

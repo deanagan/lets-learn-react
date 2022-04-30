@@ -51,7 +51,7 @@ function DropDown({ choices, currentValue, setValues, dropDownLabelId }) {
         {dropDownLabel}
       </label>
       <DropDownLi>
-        <Dropbtn onClick={handleClickInside}>{currentEntry}</Dropbtn>
+        <Dropbtn onClick={handleClickInside}>{currentEntry.name}</Dropbtn>
         {!clickedOutside ? (
           <DropDownContent ref={currentComponentRef}>
             {choices.map((pe) => (
