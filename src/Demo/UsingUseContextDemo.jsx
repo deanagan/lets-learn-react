@@ -132,7 +132,7 @@ function ColorContextComponentUser() {
   return (
     <div style={{ display: "block" }}>
       <ColoredHeader color={selectedColor.name}>
-        This header changes color (useReducer)
+        This header changes color (using context)
       </ColoredHeader>
       <DropDown
         id="color-type"

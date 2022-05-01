@@ -1,10 +1,22 @@
-import { useCallback, useMemo, useReducer } from "react";
+import { isEqual } from "lodash";
+import { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { ColoredHeader } from "../Styles/StyledComponents";
 import Accordion from "./Accordion";
 import DropDown from "./DropDown";
 
+const useMemoObjCompare = (value) => {
+  const prevRef = useRef();
+  const previous = prevRef.current;
+  const isObjEqual = isEqual(previous, value);
+  useEffect(() => {
+    if (!isObjEqual) {
+      prevRef.current = value;
+    }
+  });
+  return isObjEqual ? previous : value;
+};
 // Additive devices that are light emitting use RGB. Such as Computers, Television, Mobile Phone
 const rgbColors = [
   { name: "red", uniqueId: 11 },
@@ -29,7 +41,6 @@ const colorMapping = [
 ];
 
 const SET_COLOR_TYPE = "SET_COLOR_TYPE";
-const GET_AVAILABLE_COLORS = "GET_AVAILABLE_COLORS";
 const SET_COLOR = "SET_COLOR";
 
 function colorReducer(state, action) {
@@ -37,35 +48,39 @@ function colorReducer(state, action) {
 
   switch (type) {
     case SET_COLOR_TYPE: {
-      const mappedColors = colorMapping.find(
-        (cm) => cm.name === action.colorType
+      const colorType = colorMapping.find(
+        (cm) => cm.name === action.colorType.name
       );
-      const newAvailableColors = mappedColors.values;
+      const newAvailableColors = colorType.values;
 
       return {
-        currentColor: newAvailableColors[0].name,
-        colorType: action.colorType,
-        availableColors: newAvailableColors,
+        selectedColor: newAvailableColors[0],
+        colorType: colorType,
+        colors: newAvailableColors,
       };
     }
 
     case SET_COLOR: {
-      return { ...state, currentColor: action.color };
-    }
-
-    case GET_AVAILABLE_COLORS: {
-      return state;
+      return { ...state, selectedColor: action.color };
     }
   }
 }
 
-function useColor(initialColorType) {
-  const colorMapped = colorMapping.find((cm) => cm.name === initialColorType);
-  const [state, dispatch] = useReducer(colorReducer, {
-    currentColor: colorMapped.values[0].name,
-    colorType: initialColorType,
-    availableColors: colorMapped.values,
-  });
+function initialise(initialColorType) {
+  const colorType = colorMapping.find((cm) => cm.name === initialColorType);
+  return {
+    selectedColor: colorType.values[0],
+    colorType: colorType,
+    colors: colorType.values,
+  };
+}
+
+function useColorType(initialColorType) {
+  const [state, dispatch] = useReducer(
+    colorReducer,
+    initialColorType,
+    initialise
+  );
 
   const setColorType = useCallback(
     (colorType) => dispatch({ type: SET_COLOR_TYPE, colorType }),
@@ -87,13 +102,11 @@ function useColor(initialColorType) {
 }
 
 function ColorAccordion({ colors }) {
+  const memoizedColors = useMemoObjCompare(colors);
   const panelData = useMemo(() => {
-    const data = colorMapping
-      .filter((cm) => cm.name === colors.colorType)[0]
-      .values.map((fcm) => fcm.name)
-      .join(", ");
+    const data = memoizedColors.map((fcm) => fcm.name).join(", ");
     return <p style={{ fontSize: "15px" }}>{data}</p>;
-  }, [colors.colorType]);
+  }, [memoizedColors]);
 
   return (
     <Accordion buttonLabel="Colors" panelData={panelData} maxHeight={120} />
@@ -103,7 +116,7 @@ function ColorAccordion({ colors }) {
 function DetailAccordion({ colorType }) {
   const panelData = useMemo(() => {
     const fontSize = "15px";
-    return colorType === SUBTRACTIVE_COLOR_TYPE ? (
+    return colorType.name === SUBTRACTIVE_COLOR_TYPE ? (
       <>
         <p style={{ fontSize }}>
           Subtractive colors are created by completely or partially absorbing
@@ -134,7 +147,8 @@ function DescriptionAccordions({ colors, colorType }) {
 }
 
 export default function UsingUseContextPropDrillDemo() {
-  const [colors, { setColor, setColorType }] = useColor(ADDITIVE_COLOR_TYPE);
+  const [colorTypeSetting, { setColor, setColorType }] =
+    useColorType(ADDITIVE_COLOR_TYPE);
 
   const onHandleColorTypeSelection = useCallback(
     (colorType) => setColorType(colorType),
@@ -147,30 +161,34 @@ export default function UsingUseContextPropDrillDemo() {
   );
 
   const colorTypeChoices = useMemo(
-    () => colorMapping.filter((cm) => cm.name !== colors.colorType),
-    [colors.colorType]
+    () =>
+      colorMapping.filter((cm) => cm.name !== colorTypeSetting.colorType.name),
+    [colorTypeSetting.colorType.name]
   );
 
   return (
     <div style={{ display: "block" }}>
-      <ColoredHeader color={colors.currentColor}>
-        This header changes color (useReducer)
+      <ColoredHeader color={colorTypeSetting.selectedColor.name}>
+        This header changes color (Prop Drilling)
       </ColoredHeader>
       <DropDown
         id="color-type"
         dropDownLabelId="color-type"
         choices={colorTypeChoices}
-        currentValue={colors.colorType}
+        currentValue={colorTypeSetting.colorType}
         setValues={onHandleColorTypeSelection}
       />
       <DropDown
         id="colors"
         dropDownLabelId="colors"
-        choices={colors.availableColors}
-        currentValue={colors.availableColors[0].name}
+        choices={colorTypeSetting.colors}
+        currentValue={colorTypeSetting.selectedColor}
         setValues={onHandleColorSelection}
       />
-      <DescriptionAccordions colors={colors} colorType={colors.colorType} />
+      <DescriptionAccordions
+        colors={colorTypeSetting.colors}
+        colorType={colorTypeSetting.colorType}
+      />
     </div>
   );
 }
