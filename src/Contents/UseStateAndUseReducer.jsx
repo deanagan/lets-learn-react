@@ -158,51 +158,54 @@ const twowaybinding = [
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
         export default function UsingUseStateForDependentState() {
-          const initialColorType = ADDITIVE_COLOR_TYPE;
-          const colorMapped = colorMapping.find((cm) => cm.name === initialColorType);
-          const [colors, setColors] = useState({
-            currentColor: colorMapped.values[0].name,
-            colorType: initialColorType,
-            availableColors: colorMapped.values,
+          const [colorSetting, setColorSetting] = useState(() => {
+            const initialColorSetting = colorMapping.find(
+              (cm) => cm.name === ADDITIVE_COLOR_TYPE
+            );
+            return {
+              currentColor: initialColorSetting.values[0],
+              colorType: initialColorSetting,
+              colors: initialColorSetting.values,
+            };
           });
 
           const onHandleColorTypeSelection = useCallback((colorType) => {
-            const colors = colorMapping.find((cm) => cm.name === colorType);
+            const colorSetting = colorMapping.find((cm) => cm.name === colorType.name);
 
-            setColors({
+            setColorSetting({
+              currentColor: colorSetting.values[0],
               colorType: colorType,
-              availableColors: colors.values,
-              currentColor: colors.values[0].name,
+              colors: colorSetting.values,
             });
           }, []);
 
           const onHandleColorSelection = useCallback(
-            (color) => setColors((c) => ({ ...c, currentColor: color })),
+            (color) => setColorSetting((c) => ({ ...c, currentColor: color })),
             []
           );
 
           const colorTypeChoices = useMemo(
-            () => colorMapping.filter((cm) => cm.name !== colors.colorType),
-            [colors.colorType]
+            () => colorMapping.filter((cm) => cm.name !== colorSetting.colorType.name),
+            [colorSetting.colorType]
           );
 
           return (
             <div>
-              <ColoredHeader color={colors.currentColor}>
+              <ColoredHeader color={colorSetting.currentColor.name}>
                 This header changes color (useState)
               </ColoredHeader>
               <DropDown
                 id="color-type"
                 dropDownLabelId="color-type"
                 choices={colorTypeChoices}
-                currentValue={colors.colorType}
+                currentValue={colorSetting.colorType}
                 setValues={onHandleColorTypeSelection}
               />
               <DropDown
                 id="colors"
                 dropDownLabelId="colors"
-                choices={colors.availableColors}
-                currentValue={colors.currentColor}
+                choices={colorSetting.colors}
+                currentValue={colorSetting.currentColor}
                 setValues={onHandleColorSelection}
               />
             </div>
@@ -215,7 +218,6 @@ const twowaybinding = [
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
         const SET_COLOR_TYPE = "SET_COLOR_TYPE";
-        const GET_AVAILABLE_COLORS = "GET_AVAILABLE_COLORS";
         const SET_COLOR = "SET_COLOR";
 
         function colorReducer(state, action) {
@@ -223,24 +225,20 @@ const twowaybinding = [
 
           switch (type) {
             case SET_COLOR_TYPE: {
-              const mappedColors = colorMapping.find(
-                (cm) => cm.name === action.colorType
+              const colorType = colorMapping.find(
+                (cm) => cm.name === action.colorType.name
               );
-              const newAvailableColors = mappedColors.values;
+              const newAvailableColors = colorType.values;
 
               return {
-                currentColor: newAvailableColors[0].name,
-                colorType: action.colorType,
-                availableColors: newAvailableColors,
+                selectedColor: newAvailableColors[0],
+                colorType: colorType,
+                colors: newAvailableColors,
               };
             }
 
             case SET_COLOR: {
-              return { ...state, currentColor: action.color };
-            }
-
-            case GET_AVAILABLE_COLORS: {
-              return state;
+              return { ...state, selectedColor: action.color };
             }
           }
         }
@@ -250,13 +248,21 @@ const twowaybinding = [
         uniqueId: uuidv4(),
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
-        function useColor(initialColorType) {
-          const colorMapped = colorMapping.find((cm) => cm.name === initialColorType);
-          const [state, dispatch] = useReducer(colorReducer, {
-            currentColor: colorMapped.values[0].name,
-            colorType: initialColorType,
-            availableColors: colorMapped.values,
-          });
+        function initialise(initialColorType) {
+          const colorType = colorMapping.find((cm) => cm.name === initialColorType);
+          return {
+            selectedColor: colorType.values[0],
+            colorType: colorType,
+            colors: colorType.values,
+          };
+        }
+
+        function useColorType(initialColorType) {
+          const [state, dispatch] = useReducer(
+            colorReducer,
+            initialColorType,
+            initialise
+          );
 
           const setColorType = useCallback(
             (colorType) => dispatch({ type: SET_COLOR_TYPE, colorType }),
@@ -283,7 +289,8 @@ const twowaybinding = [
         lineNumbers: "",
         src: dedentStrUsing1stLineIndent(`
         export default function UsingUseReducer() {
-          const [colors, { setColor, setColorType }] = useColor(ADDITIVE_COLOR_TYPE);
+          const [colorType, { setColor, setColorType }] =
+            useColorType(ADDITIVE_COLOR_TYPE);
 
           const onHandleColorTypeSelection = useCallback(
             (colorType) => setColorType(colorType),
@@ -296,27 +303,27 @@ const twowaybinding = [
           );
 
           const colorTypeChoices = useMemo(
-            () => colorMapping.filter((cm) => cm.name !== colors.colorType),
-            [colors.colorType]
+            () => colorMapping.filter((cm) => cm.name !== colorType.colorType.name),
+            [colorType.colorType]
           );
 
           return (
             <div>
-              <ColoredHeader color={colors.currentColor}>
+              <ColoredHeader color={colorType.selectedColor.name}>
                 This header changes color (useReducer)
               </ColoredHeader>
               <DropDown
                 id="color-type"
                 dropDownLabelId="color-type"
                 choices={colorTypeChoices}
-                currentValue={colors.colorType}
+                currentValue={colorType.colorType}
                 setValues={onHandleColorTypeSelection}
               />
               <DropDown
                 id="colors"
                 dropDownLabelId="colors"
-                choices={colors.availableColors}
-                currentValue={colors.availableColors[0].name}
+                choices={colorType.colors}
+                currentValue={colorType.selectedColor}
                 setValues={onHandleColorSelection}
               />
             </div>
