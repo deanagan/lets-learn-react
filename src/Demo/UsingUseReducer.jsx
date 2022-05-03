@@ -28,7 +28,6 @@ const colorMapping = [
 ];
 
 const SET_COLOR_TYPE = "SET_COLOR_TYPE";
-const GET_AVAILABLE_COLORS = "GET_AVAILABLE_COLORS";
 const SET_COLOR = "SET_COLOR";
 
 function colorReducer(state, action) {
@@ -36,35 +35,39 @@ function colorReducer(state, action) {
 
   switch (type) {
     case SET_COLOR_TYPE: {
-      const mappedColors = colorMapping.find(
-        (cm) => cm.name === action.colorType
+      const colorType = colorMapping.find(
+        (cm) => cm.name === action.colorType.name
       );
-      const newAvailableColors = mappedColors.values;
+      const newAvailableColors = colorType.values;
 
       return {
-        currentColor: newAvailableColors[0].name,
-        colorType: action.colorType,
-        availableColors: newAvailableColors,
+        selectedColor: newAvailableColors[0],
+        colorType: colorType,
+        colors: newAvailableColors,
       };
     }
 
     case SET_COLOR: {
-      return { ...state, currentColor: action.color };
-    }
-
-    case GET_AVAILABLE_COLORS: {
-      return state;
+      return { ...state, selectedColor: action.color };
     }
   }
 }
 
-function useColor(initialColorType) {
-  const colorMapped = colorMapping.find((cm) => cm.name === initialColorType);
-  const [state, dispatch] = useReducer(colorReducer, {
-    currentColor: colorMapped.values[0].name,
-    colorType: initialColorType,
-    availableColors: colorMapped.values,
-  });
+function initialise(initialColorType) {
+  const colorType = colorMapping.find((cm) => cm.name === initialColorType);
+  return {
+    selectedColor: colorType.values[0],
+    colorType: colorType,
+    colors: colorType.values,
+  };
+}
+
+function useColorType(initialColorType) {
+  const [state, dispatch] = useReducer(
+    colorReducer,
+    initialColorType,
+    initialise
+  );
 
   const setColorType = useCallback(
     (colorType) => dispatch({ type: SET_COLOR_TYPE, colorType }),
@@ -86,7 +89,8 @@ function useColor(initialColorType) {
 }
 
 export default function UsingUseReducer() {
-  const [colors, { setColor, setColorType }] = useColor(ADDITIVE_COLOR_TYPE);
+  const [colorType, { setColor, setColorType }] =
+    useColorType(ADDITIVE_COLOR_TYPE);
 
   const onHandleColorTypeSelection = useCallback(
     (colorType) => setColorType(colorType),
@@ -99,27 +103,27 @@ export default function UsingUseReducer() {
   );
 
   const colorTypeChoices = useMemo(
-    () => colorMapping.filter((cm) => cm.name !== colors.colorType),
-    [colors.colorType]
+    () => colorMapping.filter((cm) => cm.name !== colorType.colorType.name),
+    [colorType.colorType]
   );
 
   return (
     <div>
-      <ColoredHeader color={colors.currentColor}>
+      <ColoredHeader color={colorType.selectedColor.name}>
         This header changes color (useReducer)
       </ColoredHeader>
       <DropDown
         id="color-type"
         dropDownLabelId="color-type"
         choices={colorTypeChoices}
-        currentValue={colors.colorType}
+        currentValue={colorType.colorType}
         setValues={onHandleColorTypeSelection}
       />
       <DropDown
         id="colors"
         dropDownLabelId="colors"
-        choices={colors.availableColors}
-        currentValue={colors.availableColors[0].name}
+        choices={colorType.colors}
+        currentValue={colorType.selectedColor}
         setValues={onHandleColorSelection}
       />
     </div>
