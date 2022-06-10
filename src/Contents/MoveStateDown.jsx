@@ -108,7 +108,7 @@ export default function MoveStateDown({ slideIndex, slideOrder }) {
 
   return (
     <section>
-      <h4>Code structure - our plan A to improve performance</h4>
+      <h4>Code structure - improving performance by moving down state down</h4>
       <CodeDemo structures={structures}>
         <div>{isBetterComponent ? <Better /> : <Problematic />}</div>
       </CodeDemo>

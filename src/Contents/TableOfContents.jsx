@@ -21,24 +21,29 @@ const contents = [
   { id: uuidv4(), value: "React's phases to updating the DOM" },
   {
     id: uuidv4(),
-    value: "Code structure - first approach to improve performance",
+    value:
+      "Code structure - improving performance by moving down state down or lifting up content",
   },
   {
     id: uuidv4(),
-    value: "React.memo - when we want to avoid component update",
+    value: "useState and useReducer",
   },
-  { id: uuidv4(), value: "useMemo and useCallback - optimisation tools" },
+  {
+    id: uuidv4(),
+    value: "useContext - avoid prop drilling",
+  },
+  {
+    id: uuidv4(),
+    value: "React.memo - reducing unnecessary component update",
+  },
   {
     id: uuidv4(),
     value: "useEffect and useLayoutEffect - asynchronous and synchronous",
   },
+  { id: uuidv4(), value: "useMemo and useCallback - optimisation tools" },
   {
     id: uuidv4(),
     value: "Using a custom hook for tracking re-renders",
-  },
-  {
-    id: uuidv4(),
-    value: "useState - keeping track of states",
   },
   { id: uuidv4(), value: "References" },
 ];

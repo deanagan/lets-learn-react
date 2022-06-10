@@ -148,7 +148,7 @@ export default function LiftContentUp({ slideIndex, slideOrder }) {
 
   return (
     <section>
-      <h4>Code structure - our plan A to improve performance</h4>
+      <h4>Code structure - improving performance by lifting up content</h4>
       <CodeDemo structures={structures}>
         <BorderedApp>
           {isBetterComponent === "better1" ? (
