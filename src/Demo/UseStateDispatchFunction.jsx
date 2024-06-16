@@ -8,7 +8,9 @@ export function UseStateNoDispatchFunction() {
 
   const increment = () => {
     setButtonClickCount(buttonClickCount + 1);
-    setTimeout(() => setCount(count + 1), 2000);
+    //setTimeout(() => 
+    setCount(count + 1);
+    //2000);
   };
 
   return (
@@ -26,7 +28,9 @@ export function UseStateDispatchFunction() {
 
   const increment = () => {
     setButtonClickCount(buttonClickCount + 1);
-    setTimeout(() => setCount((cc) => cc + 1), 2000);
+    //setTimeout(() => 
+    setCount((cc) => cc + 1);
+    //2000);
   };
 
   return (
