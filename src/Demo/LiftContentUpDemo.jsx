@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react";
 function ExpensiveComponent() {
   let renderCount = useRef(0);
   useEffect(() => {
-    const t = setTimeout(() => console.log("expensive tree!"), 2000);
+    //const t = setTimeout(() => console.log("expensive tree!"), 2000);
     renderCount.current += 1;
-    return () => clearTimeout(t);
+    //return () => clearTimeout(t);
   });
   const totalRender = renderCount.current;
   return <p>I am a very slow component, rendered {totalRender} times!.</p>;
